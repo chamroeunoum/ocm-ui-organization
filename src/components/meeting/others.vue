@@ -72,7 +72,9 @@
                       scrollable
                       @update:value="updateMemberGroupAndRole(meetingMember)"
                     >
-                    <n-button class="mx-1" >{{ meetingMemberRoles.find( (r) => r.value == meetingMember.role ).label }}</n-button>  
+                    <n-button class="mx-1" >
+                      {{ meetingMemberRoles.find( (r) => r.value == meetingMember.role ).label }}
+                    </n-button>  
                     </n-popselect>
                     <n-popselect
                       v-model:value="meetingMember.group"
@@ -487,12 +489,6 @@ export default {
           places: []
         })
       },
-      // validator: (val) => {
-      //   for(var field in ['id','username','firstname','lastname','email','phone','password','active'] ){
-      //     if( !val.hasOwnProperty(field) ) return false
-      //   }
-      //   return true 
-      // }
     },
     show: {
       type: Boolean ,

@@ -15,18 +15,18 @@
     <Transition name="slide-fade" >
       <div v-if="toggleLoginForm && meetings.length > 0 " class="absolute right-0 left-0 top-20 bottom-20" >
         <table class="table-fixed w-full min-h-full bg-gray-100 border border-gray-200" >
-          <tr class=" border-b border-gray-200 h-12 ">
-            <th class="w-1/12 font-btb-black text-center text-3xl  p-4" >ល.រ</th>
-            <th class="font-btb-black text-left text-3xl py-4" >ខ្លឹមសារ</th>
-            <th class="w-2/12 text-center font-btb-black text-3xl  p-4" >ទីកន្លែង</th>
-            <th class="w-2/12 text-center font-btb-black text-3xl  p-4" >ស្ថានភាព</th>
+          <tr class=" border-b border-gray-200 h-10 ">
+            <th class="w-1/12 font-btb-black text-center text-3xl  p-2" >ល.រ</th>
+            <th class="font-btb-black text-left text-3xl py-2" >ខ្លឹមសារ</th>
+            <th class="w-2/12 text-center font-btb-black text-3xl  p-2" >ទីកន្លែង</th>
+            <th class="w-2/12 text-center font-btb-black text-3xl  p-2" >ស្ថានភាព</th>
           </tr>
           <tr v-for="(meeting,index) in meetings" :key="index" :class="( index % 2 ? ' bg-gray-100 ' : ' bg-gray-200 ' ) " >
-            <td class="w-1/12 text-center font-btb-black text-4xl " >{{  ( page * perPage ) + index + 1 }}</td>
-            <td class="text-left py-2" >
-              <div class="font-btb-black text-2xl text-gray-500" >{{ meeting.type != undefined ? meeting.type.name : '' }}</div>
-              <div class="font-btb-black my-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-4xl h-16 text-gray-800  flex items-center" >{{  meeting.objective }}</div>
-              <div class="font-btb-black text-3xl text-gray-500" >{{ meeting.listMembers.length > 0 
+            <td class="w-1/12 text-center font-btb-black text-3xl " >{{  ( page * perPage ) + index + 1 }}</td>
+            <td class="text-left" >
+              <div class="font-btb-black text-xl text-gray-500" >{{ meeting.type != undefined ? meeting.type.name : '' }}</div>
+              <div class="font-btb-black my-2 whitespace-nowrap overflow-hidden overflow-ellipsis text-3xl h-16 text-gray-800  flex items-center" >{{  meeting.objective }}</div>
+              <div class="font-btb-black text-2xl text-gray-500" >{{ meeting.listMembers.length > 0 
               ? "ក្រោមអធិបតីភាព ៖ " + meeting.listMembers.filter( (memberInList) => memberInList.role == 'leader' && memberInList.group == 'lead_meeting' ).map( (memberInList) => 
               ( memberInList.member.countesies != undefined && memberInList.member.countesies.length > 0  ? memberInList.member.countesies.map( (c) => c.name ).join(' ') + ' ' : '' ) 
               + ( memberInList.member.lastname + " " + memberInList.member.firstname + " ")
@@ -35,11 +35,11 @@
               : '' }}</div>
             </td>
             <td class="w-2/12 text-center" >
-              <div class="font-btb-black xl:text-3xl" >ម៉ោង ៖ {{ meeting.start }}</div>
-              <div class="font-btb-black xl:text-3xl" >{{ meeting.rooms.length > 0 ? meeting.rooms.map( (room) => room.desp ).join(' ') : '' }}</div>
+              <div class="font-btb-black xl:text-2xl" >ម៉ោង ៖ {{ meeting.start }}</div>
+              <div class="font-btb-black xl:text-2xl" >{{ meeting.rooms.length > 0 ? meeting.rooms.map( (room) => room.desp ).join(' ') : '' }}</div>
             </td>
             <td class="w-2/12 text-center" >
-              <div :class=" ' font-btb-black text-4xl  w-3/4 mx-auto rounded-full text-center p-6 text-white ' + ( statuses.find( (s) => s.code == meeting.status ).color ) " >{{ statuses.find( (s) => s.code == meeting.status ).label }}</div>
+              <div :class=" ' font-btb-black text-3xl  w-3/4 mx-auto rounded-full text-center p-4 text-white ' + ( statuses.find( (s) => s.code == meeting.status ).color ) " >{{ statuses.find( (s) => s.code == meeting.status ).label }}</div>
             </td>
           </tr>
         </table>
@@ -128,31 +128,31 @@ export default {
 
     const statuses = ref([
       { 
-        code : 0 ,
+        code : 1 ,
         label : 'ថ្មី' ,
         color: ' bg-blue-500 ' 
       }, {
-        code : 1 , 
+        code : 2 , 
         label : 'កំពុងប្រជុំ' ,
         color: ' bg-green-600 ' 
       },
       {
-        code : 2 , 
+        code : 4 , 
         label: 'នៅបន្ត' ,
         color: ' bg-yellow-500 ' 
       },
       {
-        code: 4 ,
+        code: 8 ,
         label : 'ប្ដូរ' ,
         color: ' bg-purple-500 ' 
       },
       {
-        code : 8 ,
+        code : 16 ,
         label : 'ពន្យាពេល' ,
         color: ' bg-red-500 ' 
       },
       {
-        code : 16 ,
+        code : 32 ,
         label: 'ចប់' ,
         color: ' bg-blue-600 ' 
       }

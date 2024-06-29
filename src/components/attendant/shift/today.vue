@@ -4,125 +4,69 @@
     <!-- Top action panel of crud -->
     <div class="flex w-full title-bar border-b px-4 border-gray-200 py-4 ">
       <!-- Title of crud -->
-      <div class="flex w-64 h-10 py-1 title hidden" >
+      <div class="flex w-64 h-10 py-1 title" >
         <svg class="flex-none h-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M16 8h14v2H16z" fill="currentColor"></path><path d="M6 10.59L3.41 8L2 9.41l4 4l8-8L12.59 4L6 10.59z" fill="currentColor"></path><path d="M16 22h14v2H16z" fill="currentColor"></path><path d="M6 24.59L3.41 22L2 23.41l4 4l8-8L12.59 18L6 24.59z" fill="currentColor"></path></svg>
-        <div class="leading-9 font-moul" v-html="model.title" ></div>
+        <div class="leading-9 font-moul" >វត្តមានប្រចាំខែ</div>
       </div>
       <!-- Actions button of the crud -->
       <div class="flex-grow action-buttons flex-row-reverse flex p-2">
-        <div v-if=" currentTimeslot != null " class="py-1 h-10 px-6 leading-8 rounded-full mr-2 text-white bg-red-500 cursor-pointer" @click="checkout" >ចេញវេន</div>
+        <div @click="$router.push('/attendants/noshift')" class="py-1 h-10 px-6 leading-8 rounded-full mr-2 text-white bg-blue-500 cursor-pointer" >គ្មានវេន</div>
+        <!-- <div v-if=" currentTimeslot != null " class="py-1 h-10 px-6 leading-8 rounded-full mr-2 text-white bg-red-500 cursor-pointer" @click="checkout" >ចេញវេន</div>
         <div v-if=" currentTimeslot != null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">អ្នកកំពុងនៅក្នុងវេន ៖ {{ currentTimeslot != null ? currentTimeslot.title + " " + currentTimeslot.start + " ដល់ " + currentTimeslot.end : '' }}</div>
         <div v-if=" activeTimeslot != null && currentTimeslot == null " class="py-1 h-10 px-6 leading-8 rounded-full bg-blue-500 mr-2 text-white  cursor-pointer " @click="checkin" >ចូលវេន</div>
-        <div v-if=" activeTimeslot != null && currentTimeslot == null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">ពេលនេះគឺវេន ៖ {{ activeTimeslot != null ? activeTimeslot.title + " " + activeTimeslot.start + " ដល់ " + activeTimeslot.end : '' }}</div>
+        <div v-if=" activeTimeslot != null && currentTimeslot == null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">ពេលនេះគឺវេន ៖ {{ activeTimeslot != null ? activeTimeslot.title + " " + activeTimeslot.start + " ដល់ " + activeTimeslot.end : '' }}</div> -->
+        <div v-if=" currentTimeslot != null " class="py-1 h-10 px-6 leading-8 rounded-full mr-2 text-white bg-red-500 cursor-pointer" @click="checkout" >ចេញវេន</div>
+        <div v-if=" currentTimeslot != null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">អ្នកកំពុងនៅក្នុងវេន ៖ {{ currentTimeslot != null ? currentTimeslot.title + " " + currentTimeslot.start + " ដល់ " + currentTimeslot.end : '' }}</div>
+        <div v-if=" currentTimeslot == null " class="py-1 h-10 px-6 leading-8 rounded-full bg-blue-500 mr-2 text-white  cursor-pointer " @click="checkin" >ចូលវេន</div>
+        <div v-if=" currentTimeslot == null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">ពេលនេះគឺវេន ៖ {{ activeTimeslot != null ? activeTimeslot.title + " " + activeTimeslot.start + " ដល់ " + activeTimeslot.end : '' }}</div>
         <div class="py-3 h-10 px-3 leading-8" >
           <digital-clock />
         </div>
       </div>
     </div>
     <!-- Table of crud -->
-    <div class="vcb-table-panel">
+    <div class="vcb-table-panel flex flex-wrap ">
+      <div v-if=" table.records.matched instanceof Object " class="w-4/5 mx-auto my-8 flex flex-wrap justify-between" >
+        <div class=" font-moul leading-7 text-blue-500" >{{  "ចំនួនថ្ងៃធ្វើការសរុប" }}<br/>{{ Object.keys(table.records.matched).length  }} ថ្ងៃ</div>
+        <div class=" font-moul leading-7 text-blue-500" >{{  "ចំនួនម៉ោងត្រូវធ្វើការសរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total.duration ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
+        <div class=" font-moul leading-7 text-green-500" >{{  "ចំនួនម៉ោងបានធ្វើការសរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total.workedTime ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
+        <div class=" font-moul leading-7 text-yellow-500" >{{  "ចំនួនម៉ោងធ្វើការ ខ្វះ ឬ លើស សរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total.lateOrEarly ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
+      </div>
       <Transition name="slide-fade" >
-        <div class="vcb-table w-full" >
-          <div class="flex w-full flex-wrap" >
-            <div v-for="(day, index) in daysOfMonth" :key='index' class="w-full sm:w-1/2 sm:text-xs sm:leading-tight md:w-1/3 lg:w-1/4 xl:w-1/5 2xl:w-1/6  p-1" >
-              <div v-if="table.records.matched[ day.date ] != undefined" class="day border border-gray-200 rounded p-4" :style=" 'color: ' + ( daysOfWeek.find( (dow ) => dow.number == day.number ).color.hexa ) + '; ' " >
-                <!-- Case there are more than one attendants -->
-                <table class="w-full">
-                  <tr >
-                    <td class=" py-1 text-left " colspan="2" >កាលបរិច្ឆែទ ៖ </td>
-                    <td class=" py-1 text-right font-bold" colspan="2"  >{{ getDayOfWeek( day.number ).name.kh }} - {{ table.records.matched[ day.date ] != undefined ? table.records.matched[ day.date ].date : day.date }}</td>
-                  </tr>
-                  <tr v-if="table.records.matched[ day.date ] != undefined" class="bg-gray-100 " >
-                    <td class="font-moul py-1 text-left ">វេន</td>
-                    <td class="font-moul py-1 text-left ">ចូល</td>
-                    <td class="font-moul py-1 text-left ">ចេញ</td>
-                    <td class="font-moul py-1 text-right ">សរុប</td>
-                  </tr>
-                  <tr v-if="table.records.matched[ day.date ] != undefined" v-for="(ct , ctIndex) in table.records.matched[ day.date ].calculateTime.checktimes" :key="ctIndex">
-                    <td class=" py-1 text-left " >{{ ct.timeslot.title }}</td>
-                    <td class=" py-1 text-left " >{{ ct.checkin }}</td>
-                    <td class=" py-1 text-left " >
-                      <n-button v-if="ct.checkout == null && isToday(day.date) == 1" type="error" secondary round size="tiny" @click="checkout" >ចេញ</n-button>
-                      {{ ct.checkout }}
-                    </td>
-                    <td class=" py-1 text-right font-bold" >{{ ct.workedTime }}</td>
-                  </tr>
-                  <tr v-if="table.records.matched[ day.date ] != undefined" >
-                    <td class=" py-1 text-left " colspan="3" >សរុបរយះពេលបំពេញការងារ</td>
-                    <td class=" py-1 text-right font-bold"  >{{ table.records.matched[ day.date ].calculateTime.total.workedTime }}</td>
-                  </tr>
-                  <tr class="" v-if="table.records.matched[ day.date ] != undefined" >
-                    <td class=" py-1 text-left " colspan="3" >រយះពេលដែល{{ ( table.records.matched[ day.date ].calculateTime.total.lateOrEarly > 0 ? ' លើស ' : ' ខ្វះ ' ) }}</td>
-                    <td :class="'pb-2 text-right text-xl font-bold' + ( table.records.matched[ day.date ].calculateTime.total.lateOrEarly > 0 ? ' text-green-600 ' : ' text-red-600 ' )"  >{{ table.records.matched[ day.date ].calculateTime.total.lateOrEarly }}</td>
-                  </tr>
-                </table>
-                <!-- In case there is none attendants -->
-                <!-- <table v-if="table.records.matched[ day.date ] == undefined" class="w-full" >
-                  <tr >
-                    <td class=" py-1 text-left " colspan="2" >កាលបរិច្ឆែទ ៖ </td>
-                    <td class=" py-1 text-right font-bold" colspan="2"  >{{ getDayOfWeek( day.number ).name.kh }} - {{ day.date }}</td>
-                  </tr>
-                  <tr class="bg-gray-100 " >
-                    <td class="font-moul py-1 text-left ">វេន</td>
-                    <td class="font-moul py-1 text-left ">ចូល</td>
-                    <td class="font-moul py-1 text-left ">ចេញ</td>
-                    <td class="font-moul py-1 text-right ">សរុប</td>
-                  </tr>
-                  <tr v-for="(timeslot , index) in day.timeslots" :key="index" >
-                    <td class=" py-1 text-left ">{{ timeslot.title }}</td>
-                    <td class=" py-1 text-left ">
-                      {{ timeslot.start }}
-                      <n-button v-if="isToday(day.date)==1" type="primary" secondary round size="tiny" >ចូល</n-button>
-                    </td>
-                    <td class=" py-1 text-left ">
-                      {{ timeslot.end }}
-                      <n-button v-if="isToday(day.date)==1" type="error" secondary round size="tiny" >ចេញ</n-button>
-                    </td>
-                    <td class=" py-1 text-right font-bold" >0</td>
-                  </tr>
-                  <tr >
-                    <td class=" py-1 text-left " colspan="2" >សរុបរយះពេលបំពេញការងារ</td>
-                    <td class=" py-1 text-right font-bold" colspan="2"  >0</td>
-                  </tr>
-                  <tr >
-                    <td class=" py-1 text-left " colspan="2" >រយះពេលដែល លើស / ខ្វះ</td>
-                    <td class="pb-2 text-right text-xl font-bold" colspan="2"  >0</td>
-                  </tr>
-                </table> -->
-
+        <div v-if=" table.records.matched instanceof Object " class="w-4/5 mx-auto flex flex-wrap justify-between" >
+          <div class="w-full flex flex-wrap shadow border border-gray-300 rounded" >
+            <div class="attendant-list w-full " >
+              <div class="attendant-header flex bg-gray-200 h-14 leading-10 py-2" >
+                <div class="attendant-header-row w-40 font-moul" >ថ្ងៃ</div>
+                <div class="attendant-header-row flex-grow font-moul" >វេនធ្វើការ</div>
+                <div class="attendant-header-row w-40 font-moul" >សរុប</div>
+                <div class="attendant-header-row w-40 font-moul" >លើស / ខ្វះ</div>
               </div>
-              <div v-if="table.records.matched[ day.date ] == undefined && isToday( day.date ) == 2 " class="day border border-gray-200 rounded p-4 h-48 " :style=" 'color: ' + ( daysOfWeek.find( (dow ) => dow.number == day.number ).color.hexa ) + '; ' " >
-                <table class="w-full">
-                  <tr >
-                    <td class=" py-1 text-left " colspan="2" >កាលបរិច្ឆែទ ៖ </td>
-                    <td class=" py-1 text-right font-bold" colspan="2"  >{{ getDayOfWeek( day.number ).name.kh }} - {{ table.records.matched[ day.date ] != undefined ? table.records.matched[ day.date ].date : day.date }}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="font-moul text-red text-2xl" >អវត្តមាន</td>
-                  </tr>
-                </table>
-              </div>
-              <div v-if="table.records.matched[ day.date ] == undefined && isToday( day.date ) == 1 " class="day border border-gray-200 rounded p-4 h-48 " :style=" 'color: ' + ( daysOfWeek.find( (dow ) => dow.number == day.number ).color.hexa ) + '; ' " >
-                <table class="w-full">
-                  <tr >
-                    <td class=" py-1 text-left " colspan="2" >កាលបរិច្ឆែទ ៖ </td>
-                    <td class=" py-1 text-right font-bold" colspan="2"  >{{ getDayOfWeek( day.number ).name.kh }} - {{ table.records.matched[ day.date ] != undefined ? table.records.matched[ day.date ].date : day.date }}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="4" class="font-moul text-red text-2xl" >ថ្ងៃនេះ</td>
-                  </tr>
-                </table>
-              </div>
-              <div v-if="table.records.matched[ day.date ] == undefined && isToday( day.date ) == 4 " class="day border border-gray-200 rounded p-4 h-48 relative " :style=" 'color: ' + ( daysOfWeek.find( (dow ) => dow.number == day.number ).color.hexa ) + '; ' " >
-                <div class="absolute left-0 top-0 right-0 bottom-0 flex flex-wrap justify-center content-center " >
-                  <div class="font-kantumruy text-4xl " >{{ getDayOfWeek( day.number ).name.kh }}</div>
+              <div v-for="(day, index) in daysOfMonth" :key='index' class="w-full" >
+                <div v-if="table.records.matched[ day.date ] != undefined" class="flex day border-b border-gray-200 p-4" :style=" 'color: ' + ( daysOfWeek.find( (dow ) => dow.number == day.number ).color.hexa ) + '; ' " >
+                  <div class="day-number w-40 p-4 font-kantumruy">
+                    <div class="font-bold text-xl">{{ table.records.matched[ day.date ].date.split('-')[2] }}</div>
+                    <div class="text-lg font-moul">{{ daysOfWeek.find( (dow ) => dow.number == day.number ).name.kh }}</div>
+                  </div>
+                  <div class="flex-grow p-4" >
+                    <table class="w-full" >
+                      <tr class="" >
+                        <td class="font-kantumruy py-1 text-left font-bold">វេន</td>
+                        <td class="font-kantumruy py-1 text-left font-bold">ចូល</td>
+                        <td class="font-kantumruy py-1 text-left font-bold">ចេញ</td>
+                        <td class="font-kantumruy py-1 text-right font-bold">សរុប</td>
+                      </tr>
+                      <tr v-for="(ct , ctIndex) in table.records.matched[ day.date ].calculateTime.checktimes" :key="ctIndex">
+                        <td class=" py-1 text-left " >{{ ct.timeslot.title }} {{ ct.timeslot.start +'-'+ct.timeslot.end }}</td>
+                        <td class=" py-1 text-left " >{{ ct.checkin }}</td>
+                        <td class=" py-1 text-left " >{{ ct.checkout }}</td>
+                        <td class=" py-1 text-right font-bold" >{{ ct.workedTime }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class=" w-40 p-4 font-bold text-xl " >{{ table.records.matched[ day.date ].calculateTime.total.workedTime }}</div>
+                  <div :class="'w-40 p-4 font-bold  text-xl ' + ( table.records.matched[ day.date ].calculateTime.total.lateOrEarly > 0 ? ' text-green-600 ' : ' text-red-600 ' )" >{{ table.records.matched[ day.date ].calculateTime.total.lateOrEarly }}</div>
                 </div>
-                <table class="w-full">
-                  <tr >
-                    <td class=" py-1 text-left " >កាលបរិច្ឆែទ ៖ </td>
-                    <td class=" py-1 text-right font-bold" >{{ getDayOfWeek( day.number ).name.kh }} - {{ table.records.matched[ day.date ] != undefined ? table.records.matched[ day.date ].date : day.date }}</td>
-                  </tr>
-                </table>
               </div>
             </div>
           </div>
@@ -143,71 +87,10 @@
         </div>
       </Transition>
     </div>
-    <!-- Pagination of crud -->
-    <Transition name="fade" >
-      <!-- Pagination of crud -->
-      <div class="fixed left-0 right-0 bottom-12 h-12 flex" >
-        <div class="vcb-table-pagination ">
-          <!-- First -->
-          <!-- Previous -->
-          <!-- <div class="vcb-pagination-page w-8 h-8 text-center align-middle leading-8 font-bold cursor-pointer" v-html='"<"' @click="previous()" ></div> -->
-          <!-- Pages (7) -->
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(1) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">1</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(2) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">2</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(3) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">3</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(4) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">4</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(5) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">5</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(6) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">6</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(7) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">7</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(8) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">8</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(9) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">9</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(10) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">10</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(11) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">11</div>
-          </div>
-          <div class="vcb-pagination-page pages h-8 mx-2 font-bold" @click="goToMonth(12) " >
-            <div class="page w-8 h-8 text-center align-middle leading-8 cursor-pointer">12</div>
-          </div>
-          <!-- Next -->
-          <!-- <div class="vcb-pagination-page w-8 h-8 text-center align-middle leading-8 font-bold cursor-pointer" v-html='">"' @click="next()" ></div> -->
-          <!-- Last -->
-          <!-- Go to -->
-          <!-- Total per page -->
-        </div>
-      </div>
-    </Transition>
-    <!-- Filter panel of crud -->
-    <div v-if="filterPanel" class="vcb-filter-panel h-64">
-      <div class="filter-container relative w-full flex">
-        <Icon size="40" class="absolute right-0 top-0 cursor-pointer text-red-700" @click="filterPanel=!filterPanel" >
-          <CloseCircleOutline />
-        </Icon>
-      </div>
-    </div>
   </div>
 </template>
 <script>
-import { isAuth, getUser , authLogout } from './../../plugins/authentication.js'
+import { isAuth, getUser , authLogout } from './../../../plugins/authentication.js'
 import { reactive, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
@@ -221,7 +104,7 @@ import { TrashOutline, CloseCircleOutline } from '@vicons/ionicons5'
 import { useDialog, useMessage, useNotification } from 'naive-ui'
 import { Edit20Regular, Key16Regular, Save20Regular, Add20Regular, Search20Regular , ContactCard28Regular, DocumentPdf24Regular, AppsList20Regular } from '@vicons/fluent'
 import dateFormat from 'dateformat'
-import DigitalClock from './../widgets/DigitalClock.vue'
+import DigitalClock from './../../widgets/DigitalClock.vue'
 
 export default {
   name: "Regulator" ,
@@ -432,7 +315,7 @@ export default {
       activeTimeslot.value = timeslots.value.find( (ts) => {
         let start = new Date( now.getFullYear() , now.getMonth() , now.getDate() , ts.start.split(':')[0] , ts.start.split(':')[1] )
         let end = new Date( now.getFullYear() , now.getMonth() , now.getDate() , ts.end.split(':')[0] , ts.end.split(':')[1] )
-        return start.getTime() <= now.getTime() && now.getTime() <= end.getTime()
+        return ( start.getTime() - 3600 ) <= now.getTime() && now.getTime() <= end.getTime()
       })
       // Set current timeslot that user is in
       // currentTimeslot
@@ -585,7 +468,7 @@ export default {
       }).then(res => {
         table.records.all = table.records.matched = res.data.records
         table.pagination = res.data.pagination
-        daysOfMonth.value = res.data.daysOfMonth
+        daysOfMonth.value = res.data.daysOfMonth.reverse()
         timeslots.value = res.data.timeslots
         var paginationNumberList = 5
         if( ( table.pagination.page - ( paginationNumberList - 1 ) ) < 1 ){
@@ -760,7 +643,8 @@ export default {
       getDayOfWeek ,
       isToday ,
       checkin ,
-      checkout
+      checkout,
+      dateFormat
     }
   }
 }

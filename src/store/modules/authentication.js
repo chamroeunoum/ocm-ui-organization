@@ -1,5 +1,4 @@
 import auth from '../../api/auth'
-import '../../plugins/authentication'
 import { setToken, setUser } from '../../plugins/authentication'
 
 // initial state

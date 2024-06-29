@@ -27,25 +27,60 @@
           <svg class="absolute right-1 top-2 w-7 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 3a5.5 5.5 0 0 1 4.227 9.02l4.127 4.126a.5.5 0 0 1-.638.765l-.07-.057l-4.126-4.127A5.5 5.5 0 1 1 8.5 3zm0 1a4.5 4.5 0 1 0 0 9a4.5 4.5 0 0 0 0-9z" fill="currentColor"></path></g></svg>
         </div>
         <!-- Status filter dropdown list-->
-        <div class="w-40 mt-1 relative ml-2" >
+        <div class="w-1/6 mt-1 relative ml-2" >
           <n-select 
             @update:value="updateStatus"
             placeholder="ស្ថានភាពកិច្ចប្រជុំ"
             :options="statuses"
+            multiple
           >
           </n-select>
         </div>
         <!-- Type filter dropdown list-->
-        <div class="w-60 mt-1 relative ml-2" >
+        <div class="w-1/6 mt-1 relative ml-2" >
           <n-select 
             @update:value="updateType"
             placeholder="ប្រភេទកិច្ចប្រជុំ"
             :options="types"
+            multiple
+          >
+          </n-select>
+        </div>
+        <!-- Organization filter dropdown list-->
+        <div class="w-1/6 mt-1 relative ml-2" >
+          <n-select 
+            @update:value="updateOrganization"
+            placeholder="ក្រសួង ស្ថាប័ន"
+            :options="organizations"
+            multiple
+            filterable
+          >
+          </n-select>
+        </div>
+        <!-- Meeting member filter dropdown list-->
+        <div class="w-1/6 mt-1 relative ml-2" >
+          <n-select 
+            @update:value="updatePeople"
+            placeholder="សមាសភាពអង្គប្រជុំ"
+            :options="people"
+            multiple
+            filterable
+          >
+          </n-select>
+        </div>
+        <!-- Meeting room filter dropdown list-->
+        <div class="w-1/6 mt-1 relative ml-2" >
+          <n-select 
+            @update:value="updateRoom"
+            placeholder="សាលប្រជុំ"
+            :options="rooms"
+            multiple
+            filterable
           >
           </n-select>
         </div>
         <!-- Type filter dropdown list-->
-        <div class="w-60 mt-1 relative ml-2" >
+        <div class="w-1/6 mt-1 relative ml-2" >
           <n-date-picker 
           v-model:value="selectedDate" 
           @update:value="updateDate"
@@ -58,8 +93,8 @@
       <Transition name="slide-fade" >
         <div class="vcb-table w-full" >
           <div class="flex w-full flex-wrap" >
-            <table v-if="Array.isArray( table.records.matched ) && table.records.matched.length > 0 " class="vcb-table" >
-              <tr class="vcb-table-headers bg-gray-200" >
+            <table v-if="Array.isArray( table.records.matched ) && table.records.matched.length > 0 " class="vcb-table border border-gray-300 rounded-lg" >
+              <tr class="vcb-table-headers bg-gray-300" >
                 <th class="vcb-table-header" >ល.រ</th>
                 <th class="vcb-table-header">ខ្លឹមសារ</th>
                 <th class="vcb-table-header">ថ្ងៃប្រជុំ</th>
@@ -67,26 +102,102 @@
                 <th class="vcb-table-header">បញ្ចប់</th>
                 <th class="vcb-table-header">ប្រភេទប្រជុំ</th>
                 <th class="vcb-table-header text-center w-28">ស្ថានភាព</th>
-                <th class="vcb-table-header text-right w-24" >ប្រតិបត្តិការ</th>
+                <!-- <th class="vcb-table-header text-right w-40" >ប្រតិបត្តិការ</th> -->
               </tr>
-              <tr v-for="(record, index) in table.records.matched" :key='index' :class=" 'vcb-table-row hover:bg-gray-300 duration-500 ' + ( index % 2 ? ' bg-gray-100 ' : ' bg-gray-50 ' ) " >
+              <tr v-for="(record, index) in table.records.matched" :key='index' :class=" 'vcb-table-row hover:bg-gray-200 duration-500 ' + ( index % 2 ? ' bg-gray-100 ' : ' bg-gray-50 ' ) " >
                 <td class="vcb-table-cell font-bold w-12" >{{ index + 1 }}</td>
-                <td class="vcb-table-cell flex flex-wrap justify-content relative" >
-                  <div class="w-full my-2 py-2" >{{ record.objective }}<br/></div>
-                  <!-- <div v-if="Array.isArray( record.seichdey_preeng ) && record.seichdey_preeng.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >សេចក្ដីព្រាង ៖ <br/> {{ record.seichdey_preeng.map( o => o.name ).join( ' , ' ) }}</div>
-                  <div v-if="Array.isArray( record.reports ) && record.reports.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >របាយការណ៍ ៖ <br/> {{ record.reports.map( o => o.name ).join( ' , ' ) }}</div>
-                  <div v-if="Array.isArray( record.other_documents ) && record.other_documents.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >ឯកសារផ្សេង ៖ <br/> {{ record.other_documents.map( o => o.name ).join( ' , ' ) }}</div>
-                  <div v-if="Array.isArray( record.organizations ) && record.organizations.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >ក្រសួងសាមី ៖ <br/> {{ record.organizations.map( o => o.name ).join( ' , ' ) }}</div>
-                  <div v-if="Array.isArray( record.regulators ) && record.regulators.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >លិខិតគតិយុត្ត ៖ <br/> {{ record.regulators.map( o => o.types.map( (t) => t.desp ).join('') + " - " + o.fid + " - " + o.year + " , " + o.objective ).join( ' , ' ) }}</div>
-                  <div v-if="Array.isArray( record.listMembers ) && record.listMembers.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >សមាជិកប្រជុំ ៖ <br/> {{ record.listMembers.map( o => o.member.lastname + " " + o.member.firstname ).join( ' , ' ) }}</div>
-                  <div v-if="Array.isArray( record.rooms ) && record.rooms.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >បន្ទប់ប្រជុំ ៖ <br/> {{ record.rooms.map( o => o.name ).join( ' , ' ) }}</div> -->
+                <td class="main-cell vcb-table-cell flex flex-wrap justify-content relative" >
+                  <div class="w-full py-2" >{{ record.objective }}</div>
+
+                  <div v-if="Array.isArray( record.organizations ) && record.organizations.length > 0" class="pr-4 flex" >
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg class="cursor-pointer w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48"><g fill="none"><path d="M24 14.001a2 2 0 1 0 0-4a2 2 0 0 0 0 4zm1.346-9.554a2.25 2.25 0 0 0-2.692 0L6.71 16.349c-1.35 1.007-.637 3.152 1.046 3.152H9v12.005a5.25 5.25 0 0 0-3 4.744v3.5c0 .69.56 1.25 1.25 1.25h33.5c.69 0 1.25-.56 1.25-1.25v-3.5a5.25 5.25 0 0 0-3-4.744V19.5h1.244c1.684 0 2.396-2.145 1.047-3.152L25.346 4.447zM36.5 31H32V19.5h4.5V31zm-7 0h-4.25V19.5h4.25V31zm-6.75 0H18.5V19.5h4.25V31zM16 31h-4.5V19.5H16V31zm-5.986-13.999L24 6.561l13.985 10.44H10.014zM8.5 36.251a2.75 2.75 0 0 1 2.75-2.75h25.5a2.75 2.75 0 0 1 2.75 2.75v2.25h-31v-2.25z" fill="currentColor"></path></g></svg>
+                      </template>
+                      ក្រសួងស្ថាប័ន
+                    </n-tooltip>
+                    {{ record.organizations.map( o => o.name ).join( ' , ' ) }}
+                  </div>
+                  
+                  <div v-if="Array.isArray( record.rooms ) && record.rooms.length > 0" class="pr-4 flex" >
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg class="cursor-pointer w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M11.894 2.014l11.5 2.25A.75.75 0 0 1 24 5v18a.75.75 0 0 1-.606.736l-11.5 2.25A.75.75 0 0 1 11 25.25V2.75a.75.75 0 0 1 .894-.736zm.606 1.647V24.34l10-1.956V5.618l-10-1.957zm-2.5.84V6H5.5v16H10v1.5H4.75a.75.75 0 0 1-.743-.649L4 22.75V5.25a.75.75 0 0 1 .648-.743L4.75 4.5H10zm5 8.5a1 1 0 1 1 0 2a1 1 0 0 1 0-2z" fill="currentColor"></path></g></svg>
+                      </template>
+                      សាលប្រជុំ
+                    </n-tooltip>
+                    {{ record.rooms.map( o => o.name ).join( ' , ' ) }}
+                  </div>
+
+                  <!-- <div v-if="Array.isArray( record.listMembers ) && record.listMembers.length > 0" class="w-full pr-4 flex leading-8" >
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg class="cursor-pointer w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 512"><path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6c40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32S208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z" fill="currentColor"></path></svg>
+                      </template>
+                      សមាជិកប្រជុំ
+                    </n-tooltip>
+                    {{ record.listMembers.map( o => o.member.lastname + " " + o.member.firstname ).join( ' , ' ) }}
+                  </div> -->
+
+                  <!-- <div class="meeting-details w-full">
+                    <div v-if="Array.isArray( record.seichdey_preeng ) && record.seichdey_preeng.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >សេចក្ដីព្រាង ៖ <br/> {{ record.seichdey_preeng.map( o => o.name ).join( ' , ' ) }}</div>
+                    <div v-if="Array.isArray( record.reports ) && record.reports.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >របាយការណ៍ ៖ <br/> {{ record.reports.map( o => o.name ).join( ' , ' ) }}</div>
+                    <div v-if="Array.isArray( record.other_documents ) && record.other_documents.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >ឯកសារផ្សេង ៖ <br/> {{ record.other_documents.map( o => o.name ).join( ' , ' ) }}</div>
+                    <div v-if="Array.isArray( record.organizations ) && record.organizations.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >ក្រសួងសាមី ៖ <br/> {{ record.organizations.map( o => o.name ).join( ' , ' ) }}</div>
+                    <div v-if="Array.isArray( record.regulators ) && record.regulators.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >លិខិតគតិយុត្ត ៖ <br/> {{ record.regulators.map( o => o.types.map( (t) => t.desp ).join('') + " - " + o.fid + " - " + o.year + " , " + o.objective ).join( ' , ' ) }}</div>
+                    <div v-if="Array.isArray( record.listMembers ) && record.listMembers.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >សមាជិកប្រជុំ ៖ <br/> {{ record.listMembers.map( o => o.member.lastname + " " + o.member.firstname ).join( ' , ' ) }}</div>
+                    <div v-if="Array.isArray( record.rooms ) && record.rooms.length > 0" class="w-full p-2 mr-1 my-2 border-b border-gray-200 rounded-sm" >បន្ទប់ប្រជុំ ៖ <br/> {{ record.rooms.map( o => o.name ).join( ' , ' ) }}</div>
+                  </div> -->
+
+                  <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M10 18h8v2h-8z" fill="currentColor"></path><path d="M10 13h12v2H10z" fill="currentColor"></path><path d="M10 23h5v2h-5z" fill="currentColor"></path><path d="M25 5h-3V4a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v1H7a2 2 0 0 0-2 2v21a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zM12 4h8v4h-8zm13 24H7V7h3v3h12V7h3z" fill="currentColor"></path></svg> -->
+
                   <n-tooltip v-if="record.children.length" trigger="hover">
                     <template #trigger>
                       <div 
-                      class="cursor-pointer absolute right-1 top-1 text-xs h-6 leading-4 text-center bg-gray-500 text-white font-bold p-1 px-2 rounded-full" >{{ record.children.length }}</div>
+                      class="cursor-pointer absolute right-1 top-1 text-xs h-6 leading-4 text-center bg-gray-100 border border-gray-400 text-gray-800 font-bold p-1 px-2 rounded-full" >{{ record.children.length }}</div>
                     </template>
                     ធ្លាប់បានប្រជុំចំនួន {{ record.children.length }}
                   </n-tooltip>
+
+                  <div class="action-panel flex w-full mt-4" >
+                    <!-- Record Actions -->
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg class="cursor-pointer w-6 text-red-500 mx-1" @click="destroy(record)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352" fill="currentColor"></path><path d="M192 112V72h0a23.93 23.93 0 0 1 24-24h80a23.93 23.93 0 0 1 24 24h0v40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M184 176l8 224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M328 176l-8 224"></path></svg>
+                      </template>
+                      លុបគណនីនេះចោល
+                    </n-tooltip>
+
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg @click="showUpdateModal(record)" class="cursor-pointer w-6 text-yellow-600 mx-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M21.03 2.97a3.578 3.578 0 0 1 0 5.06L9.062 20a2.25 2.25 0 0 1-.999.58l-5.116 1.395a.75.75 0 0 1-.92-.921l1.395-5.116a2.25 2.25 0 0 1 .58-.999L15.97 2.97a3.578 3.578 0 0 1 5.06 0zM15 6.06L5.062 16a.75.75 0 0 0-.193.333l-1.05 3.85l3.85-1.05A.75.75 0 0 0 8 18.938L17.94 9L15 6.06zm2.03-2.03l-.97.97L19 7.94l.97-.97a2.079 2.079 0 0 0-2.94-2.94z" fill="currentColor"></path></g></svg>
+                      </template>
+                      កែប្រែព័ត៌មាន
+                    </n-tooltip>
+
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg class="cursor-pointer w-6 text-blue-500 mx-1" @click="showChildMeetingModal(record)" 
+                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
+                      </template>
+                      បញ្ចូលការប្រជុំបន្ទាប់
+                    </n-tooltip>
+                    
+                    <n-tooltip v-if="parseInt( record.pid ) > 0 || record.children.length > 0 " trigger="hover">
+                      <template #trigger>
+                        <svg @click="showHistoryModal(record)" class="cursor-pointer w-6 text-gray-500 mx-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M23 9.005h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v1H11v-1a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h4v20a2.002 2.002 0 0 0 2 2h4v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v1h-4v-9h4v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v1h-4v-9h4v1a2 2 0 0 0 2 2zm0-6h6v4h-6zm-14 4H3v-4h6zm14 18h6v4h-6zm0-11h6v4h-6z" fill="currentColor"></path></svg>
+                      </template>
+                      ប្រវត្តកិច្ចប្រជុំ
+                    </n-tooltip>
+
+                    <n-tooltip trigger="hover">
+                      <template #trigger>
+                        <svg @click="showOtherModal(record)" class="cursor-pointer w-6 text-green-500 mx-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 6V2H2v10h9v18h19V6zM4 10V4h20v2H11v4zm24 18H13V8h15z" fill="currentColor"></path><path d="M15 11h2v2h-2z" fill="currentColor"></path><path d="M19 11h7v2h-7z" fill="currentColor"></path><path d="M15 17h2v2h-2z" fill="currentColor"></path><path d="M19 17h7v2h-7z" fill="currentColor"></path><path d="M15 23h2v2h-2z" fill="currentColor"></path><path d="M19 23h7v2h-7z" fill="currentColor"></path></svg>
+                      </template>
+                      មុខងារផ្សេងទៀត
+                    </n-tooltip>
+
+                  </div>
                 </td>
                 <td class="vcb-table-cell w-40" >{{ record.date }}</td>
                 <td  class="vcb-table-cell w-28" >{{ record.start }}</td>
@@ -104,11 +215,25 @@
                   <n-button class="mx-1" >{{ statuses.find( (g) => g.value == record.status ).label }}</n-button>  
                   </n-popselect> -->
                 </td>
-                <td class="vcb-table-actions-panel text-right w-24" >
+                <!-- <td class="vcb-table-actions-panel text-right w-40" >
+                  
+                  <n-tooltip trigger="hover">
+                    <template #trigger>
+                      <svg class="cursor-pointer w-6 text-red-500 mx-1" @click="destroy(record)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352" fill="currentColor"></path><path d="M192 112V72h0a23.93 23.93 0 0 1 24-24h80a23.93 23.93 0 0 1 24 24h0v40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M184 176l8 224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M328 176l-8 224"></path></svg>
+                    </template>
+                    លុបគណនីនេះចោល
+                  </n-tooltip>
 
                   <n-tooltip trigger="hover">
                     <template #trigger>
-                      <svg class="cursor-pointer w-6 text-blue-500" @click="showChildMeetingModal(record)" 
+                      <svg class="cursor-pointer w-6 text-yellow-600 mx-1" @click="showUpdateModal(record)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M21.03 2.97a3.578 3.578 0 0 1 0 5.06L9.062 20a2.25 2.25 0 0 1-.999.58l-5.116 1.395a.75.75 0 0 1-.92-.921l1.395-5.116a2.25 2.25 0 0 1 .58-.999L15.97 2.97a3.578 3.578 0 0 1 5.06 0zM15 6.06L5.062 16a.75.75 0 0 0-.193.333l-1.05 3.85l3.85-1.05A.75.75 0 0 0 8 18.938L17.94 9L15 6.06zm2.03-2.03l-.97.97L19 7.94l.97-.97a2.079 2.079 0 0 0-2.94-2.94z" fill="currentColor"></path></g></svg>
+                    </template>
+                    កែប្រែព័ត៌មាន
+                  </n-tooltip>
+
+                  <n-tooltip trigger="hover">
+                    <template #trigger>
+                      <svg class="cursor-pointer w-6 text-blue-500 mx-1" @click="showChildMeetingModal(record)" 
                       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
                     </template>
                     បញ្ចូលការប្រជុំបន្ទាប់
@@ -116,42 +241,19 @@
                   
                   <n-tooltip trigger="hover">
                     <template #trigger>
-                      <svg class="cursor-pointer w-6 text-blue-500" @click="showUpdateModal(record)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M21.03 2.97a3.578 3.578 0 0 1 0 5.06L9.062 20a2.25 2.25 0 0 1-.999.58l-5.116 1.395a.75.75 0 0 1-.92-.921l1.395-5.116a2.25 2.25 0 0 1 .58-.999L15.97 2.97a3.578 3.578 0 0 1 5.06 0zM15 6.06L5.062 16a.75.75 0 0 0-.193.333l-1.05 3.85l3.85-1.05A.75.75 0 0 0 8 18.938L17.94 9L15 6.06zm2.03-2.03l-.97.97L19 7.94l.97-.97a2.079 2.079 0 0 0-2.94-2.94z" fill="currentColor"></path></g></svg>
+                      <svg @click="showOtherModal(record)" class="cursor-pointer w-6 text-blue-500 mx-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 6V2H2v10h9v18h19V6zM4 10V4h20v2H11v4zm24 18H13V8h15z" fill="currentColor"></path><path d="M15 11h2v2h-2z" fill="currentColor"></path><path d="M19 11h7v2h-7z" fill="currentColor"></path><path d="M15 17h2v2h-2z" fill="currentColor"></path><path d="M19 17h7v2h-7z" fill="currentColor"></path><path d="M15 23h2v2h-2z" fill="currentColor"></path><path d="M19 23h7v2h-7z" fill="currentColor"></path></svg>
                     </template>
-                    កែប្រែព័ត៌មាន
+                    មុខងារផ្សេងទៀត
                   </n-tooltip>
 
-                  <!-- <n-tooltip trigger="hover">
+                  <n-tooltip v-if="parseInt( record.pid ) > 0" trigger="hover">
                     <template #trigger>
-                      <svg class="cursor-pointer text-yellow-500" @click="inputPassword(record)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16"><g fill="none"><path d="M11 6a1 1 0 1 0 0-2a1 1 0 0 0 0 2z" fill="currentColor"></path><path d="M7.5 12v-.5h1A.5.5 0 0 0 9 11v-1h1a4 4 0 1 0-3.838-2.87L2.292 11a1 1 0 0 0-.292.707V13a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.5h1a.5.5 0 0 0 .5-.5zM7 6a3 3 0 1 1 3 3H8.5a.5.5 0 0 0-.5.5v1H7a.5.5 0 0 0-.5.5v.5h-1a.5.5 0 0 0-.5.5v1H3v-1.293l4.089-4.089a.5.5 0 0 0 .113-.534C7.072 6.748 7 6.384 7 6z" fill="currentColor"></path></g></svg>
+                      <svg class="cursor-pointer w-6 text-blue-500 mx-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M23 9.005h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v1H11v-1a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h4v20a2.002 2.002 0 0 0 2 2h4v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v1h-4v-9h4v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-6a2 2 0 0 0-2 2v1h-4v-9h4v1a2 2 0 0 0 2 2zm0-6h6v4h-6zm-14 4H3v-4h6zm14 18h6v4h-6zm0-11h6v4h-6z" fill="currentColor"></path></svg>
                     </template>
-                    ប្ដូរពាក្យសម្ងាត់សម្រាប់គណនីនេះ
-                  </n-tooltip> -->
+                    ប្រវត្តកិច្ចប្រជុំ
+                  </n-tooltip>
 
-                  <n-tooltip trigger="hover">
-                    <template #trigger>
-                      <svg class="cursor-pointer w-6 text-red-500" @click="destroy(record)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352" fill="currentColor"></path><path d="M192 112V72h0a23.93 23.93 0 0 1 24-24h80a23.93 23.93 0 0 1 24 24h0v40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M184 176l8 224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M328 176l-8 224"></path></svg>
-                    </template>
-                    លុបគណនីនេះចោល
-                  </n-tooltip>
-                  
-                  <!-- <n-tooltip trigger="hover">
-                    <template #trigger>
-                      <svg :class="'cursor-pointer ' + ( parseInt( record.active ) == 1 ? ' text-green-500 ' : ' text-gray-500 ') " @click="activateAccount(record)" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><g><path d="M362.6,192.9L345,174.8c-0.7-0.8-1.8-1.2-2.8-1.2c0,0,0,0,0,0c-1.1,0-2.1,0.4-2.8,1.2l-122,122.9L173,253.3
-                        c-0.8-0.8-1.8-1.2-2.8-1.2c-1,0-2,0.4-2.8,1.2l-17.8,17.8c-1.6,1.6-1.6,4.1,0,5.7l56,56c3.6,3.6,8,5.7,11.7,5.7
-                        c5.3,0,9.9-3.9,11.6-5.5c0,0,0,0,0.1,0l133.7-134.4C364.1,196.9,364.1,194.4,362.6,192.9z"></path><g><g><path d="M256,76c48.1,0,93.3,18.7,127.3,52.7S436,207.9,436,256s-18.7,93.3-52.7,127.3S304.1,436,256,436
-                            c-48.1,0-93.3-18.7-127.3-52.7C94.7,349.3,76,304.1,76,256s18.7-93.3,52.7-127.3C162.7,94.7,207.9,76,256,76 M256,48
-                            C141.1,48,48,141.1,48,256s93.1,208,208,208c114.9,0,208-93.1,208-208S370.9,48,256,48L256,48z"></path></g></g></g></svg>
-                    </template>
-                    {{ record.active == 1 ? 'គណនីនេះកំពុងបើកតំណើរការ' : 'គណនីនេះកំពុងត្រូវបានបិទមិនអាចប្រើប្រាស់បាន' }}
-                  </n-tooltip> -->
-                  <n-tooltip trigger="hover">
-                    <template #trigger>
-                      <svg @click="showOtherModal(record)" class="cursor-pointer w-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><circle cx="8" cy="16" r="2" fill="currentColor"></circle><circle cx="16" cy="16" r="2" fill="currentColor"></circle><circle cx="24" cy="16" r="2" fill="currentColor"></circle></svg>
-                    </template>
-                    ឯកសារផ្សេងៗ
-                  </n-tooltip>
-                </td>
+                </td> -->
               </tr>
             </table>   
             <div v-else class="text-xl text-gray-500 text-center place-items-center place-content-center w-full h-60 flex" >
@@ -211,6 +313,9 @@
     <Transition name="fade" >
       <child-meeting-form v-bind:model="model" v-bind:parent="editRecord" v-bind:show="childMeetingModal.show" :onClose="closeChildMeetingModal"/>
     </Transition>
+    <Transition name="fade" >
+      <history-form v-bind:model="model" v-bind:record="editRecord" v-bind:show="historyModal.show" :onClose="closeHistoryModal"/>
+    </Transition>
   </div>
 </template>
 <script>
@@ -231,6 +336,7 @@ import dateFormat from 'dateformat'
 import CreateForm from './create.vue'
 import UpdateForm from './update.vue'
 import OtherForm from './others.vue'
+import HistoryForm from './history.vue'
 import ChildMeetingForm from './child.vue'
 
 export default {
@@ -260,7 +366,8 @@ export default {
     CreateForm ,
     OtherForm ,
     UpdateForm ,
-    ChildMeetingForm
+    ChildMeetingForm ,
+    HistoryForm
   },
   setup(){
     var store = useStore()
@@ -268,46 +375,46 @@ export default {
     const message = useMessage()
     const notify = useNotification()
     
-    const selectedStatus = ref(-1)
+    const selectedStatuses = ref([])
     const statuses = reactive([
       {
         label: 'ទាំងអស់' ,
-        value : -1 ,
+        value : 0 ,
         color: 'text-gray-200'
       },
       {
         label: 'ថ្មី' ,
-        value : 0 ,
+        value : 1 ,
         color: ' text-blue-600 ' 
       } ,
       {
         label: 'កំពុងប្រជុំ' ,
-        value : 1 ,
+        value : 2 ,
         color: ' text-green-600' 
       } ,
       {
         label: 'នៅបន្ត' ,
-        value : 2 ,
+        value : 4 ,
         color: ' text-yellow-600' 
       } ,
       {
         label: 'ប្ដូរ' ,
-        value : 4 ,
+        value : 8 ,
         color: ' text-pink-600' 
       } ,
       {
         label: 'ពន្យាពេល' ,
-        value : 8 ,
+        value : 16 ,
         color: ' text-brown-600' 
       } ,
       {
         label: 'ចប់' ,
-        value : 16 ,
+        value : 32 ,
         color: ' text-gray-600' 
       }
     ])
     function updateStatus(value, selection){
-      selectedStatus.value = value 
+      selectedStatuses.value = value 
       goTo(1)
     }
 
@@ -389,17 +496,16 @@ export default {
         setTimeout( goTo(1) , 500 )
       }
     }
-    
-    const organizations = computed( () => {
-      return store.getters['organization/getRecords'].map( ( o ) => { 
-        return { label: o.name , value: o.id } 
-      })
-    })
 
     /**
      * Functions
      */
     function getRecords(){
+      console.log( selectedRooms.value )
+      console.log( selectedTypes.value )
+      console.log( selectedOrganizations.value )
+      console.log( selectedPeople.value )
+      console.log( selectedStatuses.value )
       /**
        * Clear time interval after calling
        */
@@ -409,9 +515,12 @@ export default {
         search: table.search ,
         perPage: table.pagination.perPage ,
         page: table.pagination.page ,
-        status: selectedStatus.value ,
-        type_id: selectedType.value ,
-        date: dateFormat( new Date( selectedDate.value ) , 'yyyy-mm-dd' )
+        date: dateFormat( new Date( selectedDate.value ) , 'yyyy-mm-dd' ) ,
+        statuses: selectedStatuses.value ,
+        types: selectedTypes.value ,
+        members : selectedPeople.value ,
+        organizations : selectedOrganizations.value ,
+        rooms : selectedRooms.value
       }).then(res => {
         table.records.all = table.records.matched = res.data.records
         table.pagination = res.data.pagination
@@ -533,7 +642,9 @@ export default {
       end: '' ,
       objective: '' ,
       contact_info: '' ,
+      status: null ,
       type_id: null ,
+      type: null ,
       date: new Date() ,
       seichdey_preeng: [] ,
       reports: [] ,
@@ -551,10 +662,13 @@ export default {
     function showOtherModal(record){
       otherModal.show = true
       editRecord.id = record.id
+      editRecord.objective = record.objective
       editRecord.start = record.start
       editRecord.end = record.end
       editRecord.date = record.date
+      editRecord.status = record.status
       editRecord.type_id = record.type_id
+      editRecord.type = record.type
       editRecord.seichdey_preeng = record.seichdey_preeng
       editRecord.reports = record.reports
       editRecord.other_documents = record.other_documents
@@ -572,6 +686,36 @@ export default {
     }
 
     /**
+     * History modal handling
+     */
+     var historyModal = reactive({show:false})
+    function showHistoryModal(record){
+      historyModal.show = true
+      editRecord.id = record.id
+      editRecord.objective = record.objective
+      editRecord.start = record.start
+      editRecord.end = record.end
+      editRecord.date = record.date
+      editRecord.status = record.status
+      editRecord.type_id = record.type_id
+      editRecord.type = record.type
+      editRecord.seichdey_preeng = record.seichdey_preeng
+      editRecord.reports = record.reports
+      editRecord.other_documents = record.other_documents
+      editRecord.organizations = record.organizations
+      editRecord.listMembers = record.listMembers
+      editRecord.regulators = record.regulators
+      editRecord.rooms = record.rooms
+    }
+
+    function closeHistoryModal( ){
+      historyModal.show = false
+      if( !historyModal.show ){
+        getRecords()
+      }
+    }
+
+    /**
      * Child meeting modal handle
      */
 
@@ -579,8 +723,6 @@ export default {
     function showChildMeetingModal(record){
       childMeetingModal.show = true
       editRecord.id = record.id
-      console.log( record )
-      console.log( editRecord )
     }
 
     function closeChildMeetingModal( ){
@@ -675,9 +817,85 @@ export default {
         })
       return types
     })
-    const selectedType = ref(0)
+    const selectedTypes = ref([])
     function updateType(value,selection){
-      selectedType.value = value
+      selectedTypes.value = value
+      goTo(1)
+    }
+
+    function getOrganizations(){
+      store.dispatch('organization/list',{page:1, perPage : 1000 , search : '' })
+      .then( res => {
+        store.commit('organization/setRecords', res.data.records)
+      }).catch( err => {
+        notify.error( err )
+      })
+    }
+    const organizations = computed( () => {
+      let organizations = 
+        store.getters['organization/getRecords'].map( organization => {
+          return { label : organization.name , value : organization.id }
+        })
+        organizations.unshift({
+          label: 'ទាំងអស់' ,
+          value: 0
+        })
+      return organizations
+    })
+    const selectedOrganizations = ref([])
+    function updateOrganization(value,selection){
+      selectedOrganizations.value = value
+      goTo(1)
+    }
+
+
+    function getPeople(){
+      store.dispatch('meeting/people',{page:1, perPage : 1000 , search : '' })
+      .then( res => {
+        store.commit('meeting/setPeople', res.data.records)
+      }).catch( err => {
+        notify.error( err )
+      })
+    }
+    const people = computed( () => {
+      let people = 
+        store.getters['meeting/people'].map( person => {
+          return { label : person.lastname + " " + person.firstname , value : person.id }
+        })
+        people.unshift({
+          label: 'ទាំងអស់' ,
+          value: 0
+        })
+      return people
+    })
+    const selectedPeople = ref([])
+    function updatePeople(value,selection){
+      selectedPeople.value = value
+      goTo(1)
+    }
+
+    function getRooms(){
+      store.dispatch('room/list',{page:1, perPage : 1000 , search : '' })
+      .then( res => {
+        store.commit('room/setRecords', res.data.records)
+      }).catch( err => {
+        notify.error( err )
+      })
+    }
+    const rooms = computed( () => {
+      let rooms = 
+        store.getters['room/getRecords'].map( room => {
+          return { label : room.name , value : room.id }
+        })
+        rooms.unshift({
+          label: 'ទាំងអស់' ,
+          value: 0
+        })
+      return rooms
+    })
+    const selectedRooms = ref([])
+    function updateRoom(value,selection){
+      selectedRooms.value = value
       goTo(1)
     }
 
@@ -692,6 +910,9 @@ export default {
      */
     getRecords()
     getTypes()
+    getOrganizations()
+    getPeople()
+    getRooms()
 
 
     return {
@@ -706,9 +927,15 @@ export default {
        * module variable
        */
       statuses ,
-      selectedStatus ,
+      selectedStatuses ,
       types ,
       selectedDate ,
+      organizations,
+      selectedOrganizations,
+      people ,
+      selectedPeople,
+      rooms ,
+      selectedRooms ,
       /**
        * Table
        */
@@ -756,6 +983,13 @@ export default {
       otherModal ,
 
       /**
+       * History modal
+       */
+      closeHistoryModal ,
+      showHistoryModal ,
+      historyModal ,
+
+      /**
        * Child meeting modal
        */
       closeChildMeetingModal ,
@@ -773,7 +1007,10 @@ export default {
       destroy ,
       updateStatus ,
       updateType ,
-      updateDate
+      updateOrganization ,
+      updatePeople ,
+      updateRoom ,
+      updateDate 
     }
   }
 }

@@ -95,15 +95,15 @@
   font-family: siemreap;
 }
 @font-face {
-  font-family: tacteng;
-  src: url("assets/fonts/Tactieng/TACTENG.TTF");
+  font-family: tacteing;
+  src: url("assets/fonts/Tacteing/Tacteing.TTF");
 }
-.font-tactieng {
-  font-family: tacteng;
+.font-tacteing {
+  font-family: tacteing;
 }
 body * {
   font-family: Arial, Helvetica, sans-serif, siemreap;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   /* Disabled user from select anything */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -189,7 +189,7 @@ Table Pagination of VCB
   @apply relative p-4 overflow-auto mb-24;
 }
 .vcb-table {
-  @apply w-full;
+  @apply w-full mb-16;
   height: fit-content ;
 }
 .vcb-table tr.vcb-table-row {
@@ -211,14 +211,20 @@ Table Pagination of VCB
   @apply px-2 py-4 text-left ;
 }
 .vcb-table-pagination {
-  @apply flex flex-wrap bg-white right-0 bottom-0 border border-l z-50 justify-center py-2 px-8 mx-auto rounded-full ;
+  @apply flex flex-row bg-white right-1 bottom-1 left-1 border border-l z-40 justify-center px-4 py-3 mx-auto rounded-full h-14 ;
 }
 .vcb-pagination-page {
-  @apply rounded-full border border-gray-200 mx-1 leading-7 w-8 h-8 font-bold cursor-pointer hover:text-blue-500 hover:border-blue-500 duration-300;
+  @apply rounded-full border border-gray-200 w-8 h-8 leading-8 mx-1 font-bold cursor-pointer text-center hover:text-blue-500 hover:border-blue-500 duration-300 transform hover:scale-110;
+}
+.vcb-pagination-page-active {
+  @apply rounded-full border border-blue-400 w-8 h-8 leading-8 mx-1 font-bold cursor-pointer text-center hover:text-blue-500 duration-300 text-blue-500 text-lg;
 }
 .vcb-filter-panel {
   @apply flex flex-row fixed bg-white right-0 bottom-0 left-0 border border-l p-3 ;
 }
 .vcb-table-cell {
   @apply leading-6 align-text-top;
+}
+.vcb-table-pagination-info {
+  @apply font-pvh text-blue-600 leading-9 px-2 h-8 ;
 }

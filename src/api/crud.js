@@ -51,12 +51,7 @@ export default {
       { 
         headers: {
           Authorization : getAuthorization() ,
-          'Content-Type': 'multipart/form-data' ,
-          // 'Access-Control-Allow-Origin' : '*' ,
-          // 'Accept-Encoding' : 'gzip, deflate, br' ,
-          // 'Host' : 'http://127.0.0.1:8000' ,
-          // 'Accept' : '*/*' ,
-          // 'Connection' : 'keep-alive'
+          'Content-Type': 'multipart/form-data'
         }
       }
     )

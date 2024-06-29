@@ -7,7 +7,7 @@
         </div>
         <div class="text-center" >
           <div class="my-2 font-moul text-yellow-500">ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
-          <div class="my-2 text-4xl font-tactieng" >3</div>
+          <div class="my-2 text-4xl font-tacteing" >3</div>
           <div class="my-2 font-moul hidden">{{ store.state.company.name }}</div>
           <div class="my-2 font-moul hidden">នាយកដ្ឋានឯកសារអេឡិចត្រូនិចនិងព័ត៌មានវិទ្យា</div>
         </div>
@@ -178,7 +178,7 @@ export default {
           }
 
           message.success("សូមស្វាគមន៍ !")
-          router.push('/meetings')
+          router.push('/')
           // if( res.data.user.role == 1 ){
           //   this.$router.push('/dashboard')
           // }else{

@@ -6,7 +6,7 @@
       <div class="flex-grow font-moul text-xs leading-7 text-left ml-1 ">សរុបកិច្ចប្រជុំតាមប្រភេទ</div>
       <div class="font-bold flex-none w-20 text-right leading-6 text-blue-600 " v-html="total" ></div>
     </div>
-    <div v-for="(meeting,index) in meetings" :key="index" @click="$router.push('/meetings')" 
+    <div v-for="(meeting,index) in meetings" :key="index" 
       class="'flex flex-wrap justify-center border border-gray-200 hover:border-blue-400 duration-300 m-4 p-8 rounded cursor-pointer font-bold" 
     >
       <div class="w-full text-center mb-4 " >{{ meeting.type.name }}</div>
@@ -31,50 +31,46 @@ export default {
     const router = useRouter()
     const store = useStore()
     const notify = useNotification()
-    const statusCodes = [0,1,2,4,8,16] ;
+    const statusCodes = [1,2,4,8,16,32] ;
     const statuses = reactive([
       {
         label: 'ថ្មី' ,
-        value : 0 ,
+        value : 1 ,
         color: ' text-blue-600 ' 
       } ,
       {
         label: 'កំពុងប្រជុំ' ,
-        value : 1 ,
+        value : 2 ,
         color: ' text-green-600' 
       } ,
       {
         label: 'នៅបន្ត' ,
-        value : 2 ,
+        value : 4 ,
         color: ' text-pink-600' 
       } ,
       {
         label: 'ប្ដូរ' ,
-        value : 4 ,
+        value : 8 ,
         color: ' text-brown-600' 
       } ,
       {
         label: 'ពន្យាពេល' ,
-        value : 8 ,
+        value : 16 ,
         color: ' text-yellow-600' 
       } ,
       {
         label: 'ចប់' ,
-        value : 16 ,
+        value : 32 ,
         color: ' text-red-600' 
       }
     ])
     
     const response = ref(null)
     const total = computed(() => {
-        return response.value !== null ? (
-          response.value.reduce( ( accumulator , meeting ) => {
-            return accumulator + meeting.total
-          } , 0 )
-        ) : 0 
+        return response.value !== null ? response.value.total : 0 
     })
     const meetings = computed(() => {
-        return response.value !== null ? response.value : 0 
+        return response.value !== null ? response.value.records : 0 
     })
     function getRecords(){
       store.dispatch('meeting/totalByType').then( res => {

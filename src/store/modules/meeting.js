@@ -8,6 +8,7 @@ const state = () => ({
   },
   records: [] ,
   record: null ,
+  people: []
 
 })
 
@@ -18,19 +19,27 @@ const getters = {
   },
   getRecord (state, getters, rootState) {
     return state.record
-  }
+  },
+  people (state, getters, rootState) {
+    return state.people
+  },
 }
 
 // actions
 const actions = {
   async list ({ state, commit, rootState },params) {
+    console.log( params )
+    
     return await crud.list(rootState.apiServer+"/"+state.model.name + "?" + new URLSearchParams({
         search: params.search ,
         perPage: params.perPage ,
         page: params.page ,
-        status: params.status ,
-        type_id: params.type_id ,
-        date: params.date
+        date: params.date ,
+        statuses: params.statuses ,
+        types: params.types ,
+        organizations: params.organizations ,
+        members: params.members ,
+        rooms: params.rooms
       }).toString()
     )
   },
@@ -51,6 +60,10 @@ const actions = {
   },
   async end ({ state, commit, rootState },params) {
     return await crud.update(rootState.apiServer+"/"+state.model.name+"/end",params)
+  },
+  // History
+  async history ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/"+state.model.name+"/"+params.id+'/history')
   },
   // Organization
   async organizations ({ state, commit, rootState },params) {
@@ -194,8 +207,65 @@ const actions = {
   async totalByType ({ state, commit, rootState },params) {
     return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype")
   },
+  async totalByTypeByLeaders ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader")
+  },
+  async totalByTypeByLeader ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader/"+params.id)
+  },
+  async totalByTypeThisWeek ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/thisweek")
+  },
+  async totalByTypeByLeaderThisWeek ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader/thisweek")
+  },
+  async totalByTypeThisMonth ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/thismonth")
+  },
+  async totalByTypeByLeaderThisMonth ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader/thismonth")
+  },
+  async totalByTypeFirstTerm ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/firstterm")
+  },
+  async totalByTypeByLeaderFirstTerm ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader/firstterm")
+  },
+  async totalByTypeFirstSemester ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/firstsemester")
+  },
+  async totalByTypeByLeaderFirstSemester ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader/firstsemester")
+  },
+  async totalByTypeThisYear ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/thisyear")
+  },
+  async totalByTypeByLeaderThisYear ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bytype/byleader/thisyear")
+  },
   async totalByStatus ({ state, commit, rootState },params) {
     return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/bystatus")
+  },
+  async totalByOrganizations ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization")
+  },
+  async totalByOrganization ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization/"+params.id)
+  },
+  async totalByOrganizationThisWeek ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization/thisweek")
+  },
+  async totalByOrganizationThisMonth ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization/thismonth")
+  },
+  async totalByOrganizationFirstTerm ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization/firstterm")
+  },
+  async totalByOrganizationFirstSemester ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization/firstsemester")
+  },
+  async totalByOrganizationThisYear ({ state, commit, rootState },params) {
+    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total/byorganization/thisyear")
   },
 }
 
@@ -210,6 +280,9 @@ const mutations = {
   },
   setRecord (state, record) {
     state.record = record
+  },
+  setPeople (state, records) {
+    state.people = records
   },
 
   // decrementProductInventory (state, { id }) {

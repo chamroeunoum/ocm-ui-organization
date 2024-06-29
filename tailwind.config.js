@@ -20,11 +20,25 @@ module.exports = {
                 '40px': '40px' ,
                 '50px': '50px' ,
                 '60px': '60px'
+            },
+            screens: {
+                'print': {
+                    'raw': 'print'
+                },
+                // => @media print { ... }
+            },
+            // Width
+            spacing: {
+                'a4w' : '49rem' ,
+                'a4h' : '69rem'
             }
         },
+        
     },
     variants: {
-        extend: {},
+        extend: {
+            
+        },
     },
     plugins: [],
 }

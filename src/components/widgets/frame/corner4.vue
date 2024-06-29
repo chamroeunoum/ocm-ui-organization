@@ -1,8 +1,8 @@
 <template>
-    <div class="absolute left-1 top-1 w-14 text-4xl font-tactieng text-yellow-800 corner-tl" >*</div>
-    <div class="absolute right-1 top-1 w-14 text-4xl font-tactieng text-yellow-800 corner-tr" >&</div>
-    <div class="absolute right-1 bottom-1 w-14 text-4xl font-tactieng text-yellow-800 corner-br" >-</div>
-    <div class="absolute left-1 bottom-1 w-14 text-4xl font-tactieng text-yellow-800 corner-bl" >,</div>
+    <div class="absolute left-1 top-1 w-14 text-4xl font-tacteing text-yellow-800 corner-tl" >*</div>
+    <div class="absolute right-1 top-1 w-14 text-4xl font-tacteing text-yellow-800 corner-tr" >&</div>
+    <div class="absolute right-1 bottom-1 w-14 text-4xl font-tacteing text-yellow-800 corner-br" >-</div>
+    <div class="absolute left-1 bottom-1 w-14 text-4xl font-tacteing text-yellow-800 corner-bl" >,</div>
 </template>
 <script>
 

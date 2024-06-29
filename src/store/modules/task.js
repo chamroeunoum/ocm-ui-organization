@@ -43,6 +43,11 @@ const actions = {
   async delete ({ state, commit, rootState },params) {
     return await crud.delete(rootState.apiServer+"/"+state.model.name+"/"+params.id+"/delete")
   },
+  async getAssignees ({ state, commit, rootState },params) {
+    return await crud.list(rootState.apiServer+"/"+state.model.name+"/assignees"+ "?" + new URLSearchParams({
+      id: params.id
+    }).toString())
+  },
 }
 
 // mutations

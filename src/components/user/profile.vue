@@ -1,87 +1,89 @@
 <template>
-  <top-menu />
-  <div class="w-full leading-9 font-moul -mt-12 mb-4 text-left pl-16" v-html="model.title" ></div>
-  <div class="w-full " >
-    <!-- Title of crud -->
-    <div class="flex w-full h-12 title mt-4 px-4 border-b hidden" >
-      <svg class="w-8 h-8 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <div class="leading-9 font-moul ml-2" v-html="model.title" ></div>
-    </div>
-    <div class="w-full">
-      <div class="flex w-full title-bar px-4 py-4 ">
-        <!-- Actions button of the crud -->
-        <div class="flex-grow action-buttons flex-row-reverse flex">
-          <!-- New Button -->
-          <div class="mt-1 ml-2">
-            <!-- <n-button type="default" @click="$router.push('/welcome')" class="mx-2 "  >
-              <template #icon>
-                <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M6.5 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-.166h.333a1.167 1.167 0 0 0 0-2.334H6.5zm.833 1.334H7V12h.333a.167.167 0 0 1 0 .334zM12 11.499a.5.5 0 0 1 .5-.499h.999a.5.5 0 0 1 0 1h-.5v.335h.5a.5.5 0 1 1 0 1h-.5l.001.164a.5.5 0 0 1-1 .002L12 12.834L12 11.499zM9.498 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5H10a1.5 1.5 0 0 0 0-3h-.502zm.5 2v-1H10a.5.5 0 0 1 0 1h-.002zM4 4a2 2 0 0 1 2-2h4.585a1.5 1.5 0 0 1 1.061.44l3.914 3.914a1.5 1.5 0 0 1 .44 1.06v1.668a1.5 1.5 0 0 1 .998 1.414v4.003A1.5 1.5 0 0 1 16 15.913V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-.087A1.5 1.5 0 0 1 3 14.5v-4.003A1.5 1.5 0 0 1 4 9.082V4zm11 4h-3.5A1.5 1.5 0 0 1 10 6.5V3H6a1 1 0 0 0-1 1v4.996h10V8zM5 15.999A1 1 0 0 0 6 17h8a1 1 0 0 0 1-1.001H5zm6-12.792V6.5a.5.5 0 0 0 .5.5h3.293L11 3.207zM4.5 9.996a.5.5 0 0 0-.5.5v4.003a.5.5 0 0 0 .5.5h10.997a.5.5 0 0 0 .5-.5v-4.003a.5.5 0 0 0-.5-.5H4.501z" fill="currentColor"></path></g></svg>
-              </template>
-              ស្វែងរកឯកសារ
-            </n-button> -->
+  <div >
+    <top-menu />
+    <div class="w-full leading-9 font-moul -mt-12 mb-4 text-left pl-16" v-html="model.title" ></div>
+    <div class="w-full " >
+      <!-- Title of crud -->
+      <!-- <div class="flex w-full h-12 title mt-4 px-4 border-b" >
+        <svg class="w-8 h-8 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="leading-9 font-moul ml-2" v-html="model.title" ></div>
+      </div> -->
+      <div class="w-full">
+        <div class="flex w-full title-bar px-4 py-4 ">
+          <!-- Actions button of the crud -->
+          <div class="flex-grow action-buttons flex-row-reverse flex">
+            <!-- New Button -->
+            <div class="mt-1 ml-2">
+              <!-- <n-button type="default" @click="$router.push('/welcome')" class="mx-2 "  >
+                <template #icon>
+                  <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M6.5 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-.166h.333a1.167 1.167 0 0 0 0-2.334H6.5zm.833 1.334H7V12h.333a.167.167 0 0 1 0 .334zM12 11.499a.5.5 0 0 1 .5-.499h.999a.5.5 0 0 1 0 1h-.5v.335h.5a.5.5 0 1 1 0 1h-.5l.001.164a.5.5 0 0 1-1 .002L12 12.834L12 11.499zM9.498 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5H10a1.5 1.5 0 0 0 0-3h-.502zm.5 2v-1H10a.5.5 0 0 1 0 1h-.002zM4 4a2 2 0 0 1 2-2h4.585a1.5 1.5 0 0 1 1.061.44l3.914 3.914a1.5 1.5 0 0 1 .44 1.06v1.668a1.5 1.5 0 0 1 .998 1.414v4.003A1.5 1.5 0 0 1 16 15.913V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-.087A1.5 1.5 0 0 1 3 14.5v-4.003A1.5 1.5 0 0 1 4 9.082V4zm11 4h-3.5A1.5 1.5 0 0 1 10 6.5V3H6a1 1 0 0 0-1 1v4.996h10V8zM5 15.999A1 1 0 0 0 6 17h8a1 1 0 0 0 1-1.001H5zm6-12.792V6.5a.5.5 0 0 0 .5.5h3.293L11 3.207zM4.5 9.996a.5.5 0 0 0-.5.5v4.003a.5.5 0 0 0 .5.5h10.997a.5.5 0 0 0 .5-.5v-4.003a.5.5 0 0 0-.5-.5H4.501z" fill="currentColor"></path></g></svg>
+                </template>
+                ស្វែងរកឯកសារ
+              </n-button> -->
+            </div>
+            <div class="w-2/5 relative" ></div>
+            <div class="mt-1 ml-2"></div>
           </div>
-          <div class="w-2/5 relative" ></div>
-          <div class="mt-1 ml-2"></div>
         </div>
-      </div>
-      <!-- End Menu -->    
-      <Transition name="slide-fade" >
-        <div v-if="transitionHelper"  class="bg-white profileInformation p-8 sm:w-2/3 md:w-3/5 lg:w-2/5 w-4/5 mx-auto border mb-8 relative">
-          <div class="profileImage border rounded-full border-gray-200 p-2 w-48 h-48 flex-none mx-auto overflow-hidden bg-center bg-no-repeat bg-cover" :style=" 'background-image: url(' + localProfile +');' " ></div>
-          <div class="uploader absolute right-0 top-0 w-24flex" >
-            <input type="file" placeholder="ឯកសារយោង" @change="fileChange" class="hidden " id="referenceDocument" />
-            <div class="cursor-pointer hover:border-green-500 flex flex-wrap"  >
-              <n-tooltip trigger="hover">
-                <template #trigger>
-                  <div class="changeProfile p-2 m-1 border rounded-full w-10 h-10 border-gray-300" @click="clickUpload"  >
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 0 0-32 32v192a32 32 0 0 0 32 32h352a32 32 0 0 0 32-32V192a32 32 0 0 0-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><circle cx="256" cy="272" r="80" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></circle><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M124 158v-22h-24v22"></path></svg>
-                  </div>
-                </template>ប្ដូររូបភាពគណនី
-              </n-tooltip>
-              <n-tooltip trigger="hover">
-                <template #trigger>
-                  <div class="saveProfile p-2 m-1 border rounded-full w-10 h-10 border-gray-300" @click="uploadFiles" >
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5c0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4c0-2.05 1.53-3.76 3.56-3.97l1.07-.11l.5-.95A5.469 5.469 0 0 1 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5l1.53.11A2.98 2.98 0 0 1 22 15c0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" fill="currentColor"></path></svg>
-                  </div>
-                </template>រក្សារទុករូបភាពថ្មី
-              </n-tooltip>
+        <!-- End Menu -->    
+        <Transition name="slide-fade" >
+          <div v-if="transitionHelper"  class="bg-white profileInformation p-8 sm:w-2/3 md:w-3/5 lg:w-2/5 w-4/5 mx-auto border mb-8 relative">
+            <div class="profileImage border rounded-full border-gray-200 p-2 w-48 h-48 flex-none mx-auto overflow-hidden bg-center bg-no-repeat bg-cover" :style=" 'background-image: url(' + localProfile +');' " ></div>
+            <div class="uploader absolute right-0 top-0 w-24flex" >
+              <input type="file" placeholder="ឯកសារយោង" @change="fileChange" class="hidden " id="referenceDocument" />
+              <div class="cursor-pointer hover:border-green-500 flex flex-wrap"  >
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <div class="changeProfile p-2 m-1 border rounded-full w-10 h-10 border-gray-300" @click="clickUpload"  >
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 0 0-32 32v192a32 32 0 0 0 32 32h352a32 32 0 0 0 32-32V192a32 32 0 0 0-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><circle cx="256" cy="272" r="80" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></circle><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M124 158v-22h-24v22"></path></svg>
+                    </div>
+                  </template>ប្ដូររូបភាពគណនី
+                </n-tooltip>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <div class="saveProfile p-2 m-1 border rounded-full w-10 h-10 border-gray-300" @click="uploadFiles" >
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5c0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4c0-2.05 1.53-3.76 3.56-3.97l1.07-.11l.5-.95A5.469 5.469 0 0 1 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5l1.53.11A2.98 2.98 0 0 1 22 15c0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" fill="currentColor"></path></svg>
+                    </div>
+                  </template>រក្សារទុករូបភាពថ្មី
+                </n-tooltip>
+              </div>
+            </div>
+            <div class="my-12">
+              <n-form
+              ref="formRef"
+              label-placement="left"
+              :model="user"
+              label-width="120"
+              >
+                <n-form-item-row label="ឈ្មោះគណនី" >
+                  <n-input placeholder="ឈ្មោះគណនី" class="text-left" v-model:value="user.username" />
+                </n-form-item-row>
+                <n-form-item-row label="គោត្តនាម" >
+                  <n-input placeholder="គោត្តនាម" class="text-left" v-model:value="user.lastname" />
+                </n-form-item-row>
+                <n-form-item-row label="នាម">
+                  <n-input placeholder="នាម" class="text-left" v-model:value="user.firstname" />
+                </n-form-item-row>
+                <n-form-item-row label="ទូរស័ព្ទ">
+                  <n-input placeholder="ទូរស័ព្ទ" class="text-left" v-model:value="user.phone" />
+                </n-form-item-row>
+                <n-form-item-row label="អ៊ីមែល" >
+                  <n-input placeholder="អ៊ីមែល" class="text-left" disabled v-model:value="user.email" />
+                </n-form-item-row>
+              </n-form>
+              <!-- <n-button type="default" class="mx-8 w-32 my-1" @click="$router.push('/welcome')" >បកក្រោយ</n-button> -->
+              <n-button class="mx-8 w-32 my-1" @click="save()" >រក្សារទុក</n-button>
             </div>
           </div>
-          <div class="my-12">
-            <n-form
-            ref="formRef"
-            label-placement="left"
-            :model="user"
-            label-width="120"
-            >
-              <n-form-item-row label="ឈ្មោះគណនី" >
-                <n-input placeholder="ឈ្មោះគណនី" class="text-left" v-model:value="user.username" />
-              </n-form-item-row>
-              <n-form-item-row label="គោត្តនាម" >
-                <n-input placeholder="គោត្តនាម" class="text-left" v-model:value="user.lastname" />
-              </n-form-item-row>
-              <n-form-item-row label="នាម">
-                <n-input placeholder="នាម" class="text-left" v-model:value="user.firstname" />
-              </n-form-item-row>
-              <n-form-item-row label="ទូរស័ព្ទ">
-                <n-input placeholder="ទូរស័ព្ទ" class="text-left" v-model:value="user.phone" />
-              </n-form-item-row>
-              <n-form-item-row label="អ៊ីមែល" >
-                <n-input placeholder="អ៊ីមែល" class="text-left" disabled v-model:value="user.email" />
-              </n-form-item-row>
-            </n-form>
-            <!-- <n-button type="default" class="mx-8 w-32 my-1" @click="$router.push('/welcome')" >បកក្រោយ</n-button> -->
-            <n-button class="mx-8 w-32 my-1" @click="save()" >រក្សារទុក</n-button>
-          </div>
-        </div>
-      </Transition>
-    </div>
-    <div class="flex flex-wrap bottom-0 mx-auto w-full fixed z-40">
-      <FooterComponent />
-    </div>
-  </div>  
+        </Transition>
+      </div>
+      <div class="flex flex-wrap bottom-0 mx-auto w-full fixed z-40">
+        <FooterComponent />
+      </div>
+    </div>  
+  </div>
 </template>
 <script >
 import { isAuth, getUser , authLogout } from './../../plugins/authentication.js'

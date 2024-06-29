@@ -13,10 +13,10 @@ export default defineConfig({
         }),
     ],  
     server: {
+        // host: '192.168.0.104',
         host: '127.0.0.1',
-        // home
         // OCM
         // host: '172.29.0.120' ,
-        port: 7003
+        port: 3002
     }
 })
