@@ -18,10 +18,10 @@ const debug = process.env.NODE_ENV !== 'production'
 export default createStore({
   state: {
     // Local computer
-    // apiServer: 'http://127.0.0.1:8000/api/meeting' ,
+    apiServer: 'http://127.0.0.1:8000/api/meeting' ,
     // apiServer: 'https://edocservice.sctthaicambodia.com/api/meeting' ,
     // Server 103.16.62.69
-    apiServer: 'https://edoc.onetechcambodia.com/api/meeting' ,
+    // apiServer: 'https://edoc.onetechcambodia.com/api/meeting' ,
     company: {
       name: 'ទីស្ដីការគណៈរដ្ឋមន្ត្រី'
     },
