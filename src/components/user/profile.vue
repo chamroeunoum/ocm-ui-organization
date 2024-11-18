@@ -1,122 +1,272 @@
 <template>
-  <div >
-    <top-menu />
-    <div class="w-full leading-9 font-moul -mt-12 mb-4 text-left pl-16" v-html="model.title" ></div>
-    <div class="w-full " >
-      <!-- Title of crud -->
-      <!-- <div class="flex w-full h-12 title mt-4 px-4 border-b" >
-        <svg class="w-8 h-8 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-        <div class="leading-9 font-moul ml-2" v-html="model.title" ></div>
-      </div> -->
-      <div class="w-full">
-        <div class="flex w-full title-bar px-4 py-4 ">
-          <!-- Actions button of the crud -->
-          <div class="flex-grow action-buttons flex-row-reverse flex">
-            <!-- New Button -->
-            <div class="mt-1 ml-2">
-              <!-- <n-button type="default" @click="$router.push('/welcome')" class="mx-2 "  >
-                <template #icon>
-                  <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M6.5 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-.166h.333a1.167 1.167 0 0 0 0-2.334H6.5zm.833 1.334H7V12h.333a.167.167 0 0 1 0 .334zM12 11.499a.5.5 0 0 1 .5-.499h.999a.5.5 0 0 1 0 1h-.5v.335h.5a.5.5 0 1 1 0 1h-.5l.001.164a.5.5 0 0 1-1 .002L12 12.834L12 11.499zM9.498 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5H10a1.5 1.5 0 0 0 0-3h-.502zm.5 2v-1H10a.5.5 0 0 1 0 1h-.002zM4 4a2 2 0 0 1 2-2h4.585a1.5 1.5 0 0 1 1.061.44l3.914 3.914a1.5 1.5 0 0 1 .44 1.06v1.668a1.5 1.5 0 0 1 .998 1.414v4.003A1.5 1.5 0 0 1 16 15.913V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-.087A1.5 1.5 0 0 1 3 14.5v-4.003A1.5 1.5 0 0 1 4 9.082V4zm11 4h-3.5A1.5 1.5 0 0 1 10 6.5V3H6a1 1 0 0 0-1 1v4.996h10V8zM5 15.999A1 1 0 0 0 6 17h8a1 1 0 0 0 1-1.001H5zm6-12.792V6.5a.5.5 0 0 0 .5.5h3.293L11 3.207zM4.5 9.996a.5.5 0 0 0-.5.5v4.003a.5.5 0 0 0 .5.5h10.997a.5.5 0 0 0 .5-.5v-4.003a.5.5 0 0 0-.5-.5H4.501z" fill="currentColor"></path></g></svg>
-                </template>
-                ស្វែងរកឯកសារ
-              </n-button> -->
-            </div>
-            <div class="w-2/5 relative" ></div>
-            <div class="mt-1 ml-2"></div>
-          </div>
-        </div>
-        <!-- End Menu -->    
+  <div class="w-full" >
+    <div class="grid grid-flow-row gap-2 mt-8 p-4 pb-16 md:grid-flow-col md:grid-cols-10 lg:grid-cols-12 " >
+      <div class="bg-white rounded-lg shadow p-4 md:col-span-3 lg:col-span-3 " >
         <Transition name="slide-fade" >
-          <div v-if="transitionHelper"  class="bg-white profileInformation p-8 sm:w-2/3 md:w-3/5 lg:w-2/5 w-4/5 mx-auto border mb-8 relative">
-            <div class="profileImage border rounded-full border-gray-200 p-2 w-48 h-48 flex-none mx-auto overflow-hidden bg-center bg-no-repeat bg-cover" :style=" 'background-image: url(' + localProfile +');' " ></div>
-            <div class="uploader absolute right-0 top-0 w-24flex" >
+          <div v-if="transitionHelper"  class="w-full relative profileInformation">
+            <div class="profileImage border-4 rounded-full border-gray-200 p-2 md:w-24 md:h-24 lg:w-32 lg:h-32 w-28 h-28 mx-auto bg-center bg-no-repeat bg-cover" :style=" 'background-image: url(' + localProfile +');' " ></div>
+            <div v-if="user.countesy != null" class="font-moul text-center my-2" >{{ user.countesy.name }}</div>
+            <div v-if="user.people != null" class="font-moul text-center my-1" >
+              {{ user.people.lastname + " " + user.people.firstname }}<br/>
+              {{ user.people.enlastname + " " + user.people.enfirstname }}
+            </div>
+            <div v-if="user.position != null" class=" my-2 " >តួនាទី ៖ {{ user.position.name }}</div>
+            <div v-if="user.organization != null" class=" my-2 " >អង្គភាព ៖ {{ user.organization.name }}</div>
+            <div v-if="user.officer != null" class=" my-2 " >អត្តលេខមន្ត្រី ៖ {{ $toKhmer( user.officer.code ) }}</div>
+            <div v-if="user.card != null" class=" my-2 " >លេខកាតមន្ត្រី ៖ {{ $toKhmer( user.card.number ) }}</div>
+            <div class="uploader absolute md:-right-12 lg:-right-8 -right-8 -top-4 w-14 flex" >
               <input type="file" placeholder="ឯកសារយោង" @change="fileChange" class="hidden " id="referenceDocument" />
               <div class="cursor-pointer hover:border-green-500 flex flex-wrap"  >
                 <n-tooltip trigger="hover">
                   <template #trigger>
-                    <div class="changeProfile p-2 m-1 border rounded-full w-10 h-10 border-gray-300" @click="clickUpload"  >
+                    <div 
+                      @click="clickUpload" 
+                      class="changeProfile p-1 m-1 border bg-white rounded-full md:w-6 md:h-6 lg:w-8 lg:h-8 w-8 h-8 border-gray-300" >
                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M350.54 148.68l-26.62-42.06C318.31 100.08 310.62 96 302 96h-92c-8.62 0-16.31 4.08-21.92 10.62l-26.62 42.06C155.85 155.23 148.62 160 140 160H80a32 32 0 0 0-32 32v192a32 32 0 0 0 32 32h352a32 32 0 0 0 32-32V192a32 32 0 0 0-32-32h-59c-8.65 0-16.85-4.77-22.46-11.32z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><circle cx="256" cy="272" r="80" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></circle><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M124 158v-22h-24v22"></path></svg>
                     </div>
                   </template>ប្ដូររូបភាពគណនី
                 </n-tooltip>
                 <n-tooltip trigger="hover">
                   <template #trigger>
-                    <div class="saveProfile p-2 m-1 border rounded-full w-10 h-10 border-gray-300" @click="uploadFiles" >
+                    <div
+                      @click="uploadFiles" 
+                      class="saveProfile p-1 m-1 border bg-white rounded-full md:w-6 md:h-6 lg:w-8 lg:h-8  w-8 h-8 border-gray-300" >
                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5c0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4c0-2.05 1.53-3.76 3.56-3.97l1.07-.11l.5-.95A5.469 5.469 0 0 1 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5l1.53.11A2.98 2.98 0 0 1 22 15c0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" fill="currentColor"></path></svg>
                     </div>
                   </template>រក្សារទុករូបភាពថ្មី
                 </n-tooltip>
+                <n-tooltip trigger="hover">
+                  <template #trigger>
+                    <div 
+                      @click="$router.push('/password/change')"
+                      class="changePassword p-1 m-1 border bg-white rounded-full md:w-6 md:h-6 lg:w-8 lg:h-8 w-8 h-8 border-gray-300" >
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16"><g fill="none"><path d="M11 6a1 1 0 1 0 0-2a1 1 0 0 0 0 2z" fill="currentColor"></path><path d="M7.5 12v-.5h1A.5.5 0 0 0 9 11v-1h1a4 4 0 1 0-3.838-2.87L2.292 11a1 1 0 0 0-.292.707V13a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.5h1a.5.5 0 0 0 .5-.5zM7 6a3 3 0 1 1 3 3H8.5a.5.5 0 0 0-.5.5v1H7a.5.5 0 0 0-.5.5v.5h-1a.5.5 0 0 0-.5.5v1H3v-1.293l4.089-4.089a.5.5 0 0 0 .113-.534C7.072 6.748 7 6.384 7 6z" fill="currentColor"></path></g></svg>
+                    </div>
+                  </template>ប្ដូរពាក្យសម្ងាត់
+                </n-tooltip>
               </div>
             </div>
-            <div class="my-12">
+          </div>
+        </Transition>
+      </div>
+      <div class="relative bg-white shadow rounded-lg p-4 md:col-span-7  lg:col-span-9" >
+        <n-tabs type="line" animated>
+          <n-tab-pane name="background" tab="ព័តមានផ្ទាល់ខ្លួន">
+            <div class="my-4 relative">
               <n-form
               ref="formRef"
-              label-placement="left"
+              label-placement="top"
+              :model="user"
+              label-width="120"
+              class="grid grid-cols-2 gap-1 "
+              >
+                <div class="">
+                  <!-- <n-form-item label="ឈ្មោះគណនីប្រើប្រាស់" path="username" class="w-11/12" >
+                    <n-input v-model:value="user.people.username" placeholder="ឈ្មោះគណនីប្រើប្រាស់" class="text-left" />
+                  </n-form-item> -->
+                  <n-form-item label="ត្រកូល" path="lastname" class="w-11/12" >
+                    <n-input v-model:value="user.people.lastname" placeholder="នាមត្រកូល" class="text-left" />
+                  </n-form-item>
+                  <n-form-item label="ឈ្មោះ" path="firstname" class="w-11/12" >
+                    <n-input v-model:value="user.people.firstname" placeholder="នាមខ្លួន" class="text-left"  />
+                  </n-form-item>
+                  <n-form-item label="ត្រកូល (អង់គ្លេស)" path="enlastname" class="w-11/12" >
+                    <n-input v-model:value="user.people.enlastname" placeholder="នាមត្រកូល" class="text-left"  />
+                  </n-form-item>
+                  <n-form-item label="ឈ្មោះ (អង់គ្លេស)" path="enfirstname" class="w-11/12" >
+                    <n-input v-model:value="user.people.enfirstname" placeholder="នាមខ្លួន" class="text-left"  />
+                  </n-form-item>
+                  <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" path="dob" class="w-11/12" >
+                    <n-date-picker v-model:value="peopleDob" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                  </n-form-item>
+                  <n-form-item label="ភេទ" path="gender" class="w-11/12 " >
+                    <n-radio-group v-model:value="user.people.gender" class="text-left" >
+                      <n-space>
+                        <n-radio
+                          v-for="gender in [{label:'ស្រី',value:0},{label:'ប្រុស',value:1}]"
+                          :key="gender.value"
+                          :value="gender.value"
+                          :label="gender.label"
+                        />
+                      </n-space>
+                    </n-radio-group>
+                  </n-form-item>
+                  <n-form-item label="នៅលីវ ឬ រៀបការរួច" path="marry" class="w-11/12 text-left" >
+                    <n-radio-group v-model:value="user.people.marry_status" class="" >
+                      <n-space>
+                        <n-radio
+                        v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបការរួច',value:'married'},{label:'ពោះមាយ / មេមាយ',value:'divorced'}]"
+                        :key="status.value"
+                        :value="status.value"
+                        :label="status.label"
+                        />
+                      </n-space>
+                    </n-radio-group>
+                  </n-form-item>
+                </div>
+                <div class="">
+                  <n-form-item-row label="ទូរស័ព្ទដៃ">
+                    <n-input placeholder="ទូរស័ព្ទ" class="text-left w-11/12" v-model:value="user.people.mobile_phone"  />
+                  </n-form-item-row>
+                  <n-form-item-row label="ទូរស័ព្ទនៅផ្ទះ">
+                    <n-input placeholder="ទូរស័ព្ទ" class="text-left w-11/12" v-model:value="user.people.office_phone"  />
+                  </n-form-item-row>
+                  <n-form-item-row label="អ៊ីមែល" >
+                    <n-input placeholder="អ៊ីមែល" class="text-left w-11/12" v-model:value="user.people.email"  />
+                  </n-form-item-row>
+                  <n-form-item-row label="អត្តសញ្ញាណបណ្ណ" >
+                    <n-input placeholder="អត្តសញ្ញាណបណ្ណ" class="text-left w-11/12" v-model:value="user.people.nid"  />
+                  </n-form-item-row>
+                  <n-form-item-row label="លិខិតឆ្លងដែន" >
+                    <n-input placeholder="លិខិតឆ្លងដែន" class="text-left w-11/12" v-model:value="user.people.passport"  />
+                  </n-form-item-row>
+                  <n-form-item-row label="អសយដ្ឋានបច្ចុប្បន្ន" >
+                    <n-input 
+                      placeholder="អសយដ្ឋានបច្ចុប្បន្ន" 
+                      class="text-left" 
+                      v-model:value="user.people.address" 
+                      type="textarea" show-count maxlength="5000" />
+                  </n-form-item-row>
+                  <n-form-item-row label="ទីកន្លែងកំណើត" >
+                    <n-input placeholder="ទីកន្លែងកំណើត" class="text-left" 
+                    v-model:value="user.people.pob" 
+                    type="textarea" show-count maxlength="5000" />
+                  </n-form-item-row>
+                </div>
+              </n-form>
+              <div class="w-full py-2 text-left" >
+                <n-button class="" @click="saveProfile" type="primary" >រក្សារទុក</n-button>
+              </div>
+            </div>
+          </n-tab-pane>
+          <n-tab-pane name="organization" tab="ព័ត៌មានអង្គភាព">
+            <div class="mt-4" >
+              <n-form
+              ref="formRef"
+              label-placement="top"
+              :model="user"
+              label-width="120"
+              class="grid grid-cols-2 gap-1"
+              >
+                <div class="" >
+                  <n-form-item label="ថ្ងៃខែឆ្នាំពេញសិទ្ធិ(តាំងស៊ុប)" path="officer_dob" class="w-11/12" >
+                    <n-date-picker disabled v-model:value="officerDate" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                  </n-form-item>
+                  <n-form-item label="អត្តលេខ" path="code" class="w-11/12" >
+                    <n-input disabled v-model:value="user.officer.code" placeholder="អត្តលេខ" />
+                  </n-form-item>
+                  <n-form-item label="ទូរស័ព្ទ" path="phone" class="w-11/12" >
+                    <n-input v-model:value="user.officer.phone" placeholder="ទូរស័ព្ទ" />
+                  </n-form-item>
+                  <n-form-item label="អ៊ីមែល" path="email" class="w-11/12" >
+                    <n-input v-model:value="user.officer.email" placeholder="អ៊ីមែល" />
+                  </n-form-item>
+                  <n-form-item label="លេខិតឆ្លងដែន" path="passport" class="w-11/12" >
+                    <n-input v-model:value="user.officer.passport" placeholder="លេខិតឆ្លងដែន" />
+                  </n-form-item>
+                </div>
+                <div class="" >
+                  <n-form-item label="ងារ" path="countesy" class="w-11/12" >
+                    <n-select
+                      v-model:value="selectedCountesies"
+                      filterable
+                      placeholder="សូមជ្រើសរើសងារ"
+                      :options="countesies"
+                      multiple
+                    />
+                  </n-form-item>
+                  <n-form-item label="តួនាទី" path="position" class="w-11/12" >
+                    <n-select
+                      v-model:value="selectedPosition"
+                      filterable
+                      placeholder="សូមជ្រើសរើសតួនាទី"
+                      :options="positions"
+                    />
+                  </n-form-item>
+                  <n-form-item label="អង្គភាព" path="organization" class="w-11/12" >
+                    <n-select
+                      v-model:value="selectedOrganization"
+                      filterable
+                      placeholder="សូមជ្រើសរើសអង្គភាព"
+                      :options="organizations"
+                    />
+                  </n-form-item>
+                </div>
+              </n-form>
+              <div class="w-full py-2 text-left" >
+                <n-button class="" @click="saveOfficer" type="primary" >រក្សារទុក</n-button>
+              </div>
+            </div>
+          </n-tab-pane>
+          <n-tab-pane name="profile" tab="ព័ត៌មានគណនី">
+            <div class="my-4">
+              <n-form
+              ref="formRef"
+              label-placement="top"
               :model="user"
               label-width="120"
               >
                 <n-form-item-row label="ឈ្មោះគណនី" >
                   <n-input placeholder="ឈ្មោះគណនី" class="text-left" v-model:value="user.username" />
                 </n-form-item-row>
-                <n-form-item-row label="គោត្តនាម" >
-                  <n-input placeholder="គោត្តនាម" class="text-left" v-model:value="user.lastname" />
-                </n-form-item-row>
-                <n-form-item-row label="នាម">
-                  <n-input placeholder="នាម" class="text-left" v-model:value="user.firstname" />
+                <n-form-item-row label="អ៊ីមែល" >
+                  <n-input placeholder="អ៊ីមែល" class="text-left" disabled v-model:value="user.email" />
                 </n-form-item-row>
                 <n-form-item-row label="ទូរស័ព្ទ">
                   <n-input placeholder="ទូរស័ព្ទ" class="text-left" v-model:value="user.phone" />
                 </n-form-item-row>
-                <n-form-item-row label="អ៊ីមែល" >
-                  <n-input placeholder="អ៊ីមែល" class="text-left" disabled v-model:value="user.email" />
-                </n-form-item-row>
               </n-form>
-              <!-- <n-button type="default" class="mx-8 w-32 my-1" @click="$router.push('/welcome')" >បកក្រោយ</n-button> -->
-              <n-button class="mx-8 w-32 my-1" @click="save()" >រក្សារទុក</n-button>
+              <div class="w-full py-2 text-left" >
+                <n-button class="" @click="saveAccount" type="primary" >រក្សារទុក</n-button>
+              </div>
             </div>
-          </div>
-        </Transition>
+          </n-tab-pane>
+        </n-tabs>
       </div>
-      <div class="flex flex-wrap bottom-0 mx-auto w-full fixed z-40">
-        <FooterComponent />
-      </div>
-    </div>  
-  </div>
+    </div>
+    <window-bar :title="model.title" :icon="1" />
+    <BottomMenuFloatItems />
+  </div>  
 </template>
 <script >
 import { isAuth, getUser , authLogout } from './../../plugins/authentication.js'
-import { reactive, ref , computed } from 'vue'
+import { reactive, ref , computed , onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter, useRoute } from 'vue-router'
-import FooterComponent from './../../components/footer/copy-right.vue'
-import TopMenu from './../menu/topmenu-floattop.vue'
+import Dock from '@components/widgets/Dock.vue'
 import { useMessage, useNotification } from 'naive-ui'
 import { Icon } from '@vicons/utils'
 import { CameraOutline , CloudUploadOutline} from '@vicons/ionicons5'
+import dateFormat from "dateformat"
+import BottomMenuFloatItems from '@components/menu/bottommenu-float-items.vue'
+import WindowBar from '@components/widgets/WindowBar.vue'
 
   export default {
     name: 'Profile' ,
     components: {
-      FooterComponent ,
+      BottomMenuFloatItems ,
       Icon ,
       CameraOutline ,
       CloudUploadOutline ,
-      TopMenu
+      Dock ,
+      WindowBar
     },
     setup(){
       const router = useRouter()
       const store = useStore()
       const user = ref(null)
+      const currentUserValue = ref(null)
       const message = useMessage()
       const notify = useNotification()
       const base64Avatar = ref(null)
       const selectedFileType = ref('')
       const transitionHelper = ref(false)
+      const peopleDob = ref(null)
+      const officerDate = ref(null)
 
       if( isAuth() ){
         user.value = getUser()
+        currentUserValue.value = user.value
         setTimeout( function(){
           transitionHelper.value = true
         } , 300 )
@@ -127,23 +277,90 @@ import { CameraOutline , CloudUploadOutline} from '@vicons/ionicons5'
           firstname: '' ,
           phone: '' ,
           username: '' ,
-          email: ''
+          email: '' ,
+          dob: null
         })
       }
+
+      const selectedOrganization = ref(null)
+      const selectedPosition = ref(null)
+      const selectedCountesies = ref([])
+
+      const organizations = computed( () => 
+        store.getters['organization/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
+      )
+      const positions = computed( () => 
+        store.getters['position/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
+      ) 
+      const countesies = computed( () => 
+        store.getters['countesy/getRecords'].map( c => ( { label: c.name , value : c.id } ) )
+      ) 
+      
+      onMounted( () => {
+        if( isAuth() ) {
+          peopleDob.value = user.value.people != null 
+            ? (
+              user.value.people.dob != undefined && user.value.people.dob.length > 0
+                ? ( new Date( user.value.people.dob ) ).getTime() 
+                : ( new Date() ).getTime() 
+            )
+            : null
+          officerDate.value = user.value.officer != null 
+            ? (
+              user.value.officer.date != undefined && user.value.officer.date.length > 0
+                ? ( new Date( user.value.officer.date ) ).getTime() 
+                : ( new Date() ).getTime() 
+            )
+            : null
+          selectedPosition.value = user.value.officer != null
+            ? user.value.officer.position_id
+            : null
+          selectedOrganization.value = user.value.officer != null
+            ? user.value.officer.organization_id
+            : null
+          selectedCountesies.value = user.value.officer != null
+            ? [user.value.officer.countesy_id ]
+            : null
+        }
+        getOrganizations()
+        getPositions()
+        getCountesies()
+      })
 
       /**
        * Variables
        */    
       const model = reactive( {
         name: "UserProfile" ,
-        title: "ព័ត៌មានអំពីគណនី"
+        title: "ព័ត៌មានរបស់មន្ត្រី"
       })
       
-      function save(){
-        console.log( user.value )
+
+      const saveAccountEnable = computed( () => {
+        return user.value.phone != currentUserValue.value.phone || user.value.username != currentUserValue.value.username
+      })
+      function saveAccount(){
+        if( 
+          user.value.username == ""
+        ){
+          notify.info({
+            title: 'រក្សារទុកព័ត៌មាន' ,
+            content: 'សូមបំពេញព័ត៌មានឈ្មោះគណនី',
+            duration: 1000
+          })
+          return false
+        }
+        if( 
+          user.value.phone == ""
+        ){
+          notify.info({
+            title: 'រក្សារទុកព័ត៌មាន' ,
+            content: 'សូមបំពេញព័ត៌មានលេខទូរសព្ទ',
+            duration: 1000
+          })
+          return false
+        }
         store.dispatch('user/update',{
-          lastname: user.value.lastname ,
-          firstname: user.value.firstname ,
           phone: user.value.phone ,
           username: user.value.username
         }).then( res => {
@@ -153,11 +370,108 @@ import { CameraOutline , CloudUploadOutline} from '@vicons/ionicons5'
             duration: 1000
           })
           let tmpUser = getUser()
-          tmpUser.lastname = res.data.user.lastname
-          tmpUser.firstname = res.data.user.firstname
           tmpUser.phone = res.data.user.phone
           tmpUser.username = res.data.user.username
           localStorage.setItem( 'user' , JSON.stringify( tmpUser ) )
+          user.value = getUser()
+        }).catch( err => {
+          console.log( err )
+        })
+      }
+
+      function saveProfile(){
+
+        if( user.value.people.lastname.length <=0 || user.value.people.firstname.length <=0 || user.value.people.enlastname.length <=0 || user.value.people.enfirstname.length <=0  ){
+          notify.info({
+            title: 'ព័ត៌មានអង្គភាព' ,
+            content: 'សូមបំពេញឈ្មៅខ្មែរ និង អង់គ្លេស' ,
+            duration: 1000
+          })
+          return false
+        }
+        if( peopleDob.value == null ){
+          notify.info({
+            title: 'ព័ត៌មានអង្គភាព' ,
+            content: 'សូមបំពេញ ថ្ងៃ ខែ ឆ្នាំ កំណើត' ,
+            duration: 1000
+          })
+          return false
+        }
+
+        store.dispatch('user/peopleUpdate',{
+          user_id : user.value.id ,
+          officer_id: user.value.officer.id , 
+          people_id : user.value.people.id ,
+          lastname: user.value.people.lastname ,
+          firstname: user.value.people.firstname ,
+          enlastname: user.value.people.enlastname ,
+          enfirstname: user.value.people.enfirstname ,
+          dob: peopleDob.value != null && parseInt( peopleDob.value ) > 0 ? dateFormat( new Date(peopleDob.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
+          gender: user.value.people.gender ,
+          marry_status: user.value.people.marry_status ,
+          mobile_phone: user.value.people.mobile_phone ,
+          office_phone: user.value.people.office_phone ,
+          email: user.value.people.email ,
+          nid: user.value.people.nid ,
+          passport: user.value.people.passport ,
+          address: user.value.people.address ,
+          pob: user.value.people.pob
+        }).then( res => {
+          notify.success({
+            title: 'រក្សារទុករួចរាល់។' ,
+            content: res.data.message ,
+            duration: 500
+          })
+          localStorage.setItem( 'user' , JSON.stringify( res.data.user ) )
+          user.value = getUser()
+        }).catch( err => {
+          console.log( err )
+        })
+      }
+
+      function saveOfficer(){
+        if( parseInt( selectedPosition.value ) <= 0 ){
+          notify.info({
+            title: 'ព័ត៌មានអង្គភាព' ,
+            content: 'សូមជ្រើសរើស តួនាទី របស់មន្ត្រី' ,
+            duration: 1000
+          })
+          return false
+        }
+        if( parseInt( selectedOrganization.value ) <= 0 ){
+          notify.info({
+            title: 'ព័ត៌មានអង្គភាព' ,
+            content: 'សូមជ្រើសរើស អង្គភាព របស់មន្ត្រី' ,
+            duration: 1000
+          })
+          return false
+        }
+        if( Array.isArray( selectedCountesies.value ) && selectedCountesies.value.length > 0 && parseInt( selectedCountesies.value[0] ) <= 0 ){
+          notify.info({
+            title: 'ព័ត៌មានអង្គភាព' ,
+            content: 'សូមជ្រើសរើស ងារ របស់មន្ត្រី' ,
+            duration: 1000
+          })
+          return false
+        }
+        store.dispatch('user/officerUpdate',{
+          user_id: user.value.id ,
+          officer_id : user.value.officer.id ,
+          officer_code : user.value.officer.code ,
+          officer_phone: user.value.officer.phone ,
+          officer_email: user.value.officer.email ,
+          officer_date: officerDate.value != null && parseInt( officerDate.value ) > 0 ? dateFormat( new Date(officerDate.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
+          officer_passport: user.value.officer.passport ,
+          officer_organization_id: selectedOrganization.value ,
+          officer_position_id: selectedPosition.value ,
+          officer_countesy_id: selectedCountesies.value[0]
+        }).then( res => {
+          notify.success({
+            title: 'រក្សារទុករួចរាល់។' ,
+            content: res.data.message ,
+            duration: 1000
+          })
+          localStorage.setItem( 'user' , JSON.stringify( res.data.user ) )
           user.value = getUser()
         }).catch( err => {
           console.log( err )
@@ -307,18 +621,80 @@ import { CameraOutline , CloudUploadOutline} from '@vicons/ionicons5'
         return base64Avatar.value !== "" && base64Avatar.value !== null ? base64Avatar.value : ( user.value.avatar_url !== "" && user.value.avatar_url !== null ? user.value.avatar_url : "/src/assets/logo.png" )
       })
 
+      function getOrganizations(){
+        store.dispatch('organization/list',{
+          page: 1 ,
+          perPage: 1000 ,
+          search: '' ,
+          id: 0
+        }).then(res=>{
+          store.commit('organization/setRecords',res.data.records)
+        }).catch(err =>{
+          notify.error({
+            title: 'អានអង្គភាព' ,
+            description: 'មានបញ្ហាពេលអានអានអង្គភាព។'
+          })
+          console.log( err )
+        })
+      }
+      function getCountesies(){
+        store.dispatch('countesy/list',{
+          page: 1 ,
+          perPage: 1000 ,
+          search: ''
+        }).then(res=>{
+          store.commit('countesy/setRecords',res.data.records)
+        }).catch(err =>{
+          notify.error({
+            title: 'អានងារ' ,
+            description: 'មានបញ្ហាពេលអានងារ។'
+          })
+          console.log( err )
+        })
+      }
+      function getPositions(){
+        store.dispatch('position/list',{
+          page: 1 ,
+          perPage: 1000 ,
+          search: ''
+        }).then(res=>{
+          store.commit('position/setRecords',res.data.records)
+        }).catch(err =>{
+          notify.error({
+            title: 'អានតំណែង' ,
+            description: 'មានបញ្ហាពេលអានតំណែង។'
+          })
+          console.log( err )
+        })
+      }
+
       return {
         user ,
         logout ,
-        save ,
+        saveAccount ,
+        saveProfile ,
+        saveOfficer ,
+        officerDate ,
+        peopleDob ,
         fileChange ,
         uploadFiles,
         clickUpload ,
         localProfile ,
         model ,
-        transitionHelper
+        transitionHelper ,
+        selectedPosition ,
+        selectedOrganization ,
+        selectedCountesies ,
+        positions ,
+        organizations ,
+        countesies
       }
     }
 
   }
 </script>
+<style lang="css" scoped >
+  .profileInformation {
+    @apply text-left ;
+  }
+</style>

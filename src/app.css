@@ -113,17 +113,6 @@ body * {
   user-select: none;
 }
 
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-} */
-
-/**
-Transition
-*/
 
 .fade-enter-active,
 .fade-leave-active {
@@ -227,4 +216,17 @@ Table Pagination of VCB
 }
 .vcb-table-pagination-info {
   @apply font-pvh text-blue-600 leading-9 px-2 h-8 ;
+}
+
+/**
+  Hover enlargement
+*/
+.hover-enlarge-105 {
+  @apply hover:shadow duration-500 hover:scale-105 transform-gpu border border-gray-100 hover:border-blue-400 ;
+}
+.hover-enlarge-110 {
+  @apply hover:shadow duration-500 hover:scale-105 transform-gpu border border-gray-100 hover:border-blue-400 ;
+}
+.hover-enlarge-120 {
+  @apply hover:shadow duration-500 hover:scale-105 transform-gpu border border-gray-100 hover:border-blue-400 ;
 }

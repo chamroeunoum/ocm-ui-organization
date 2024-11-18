@@ -1,7 +1,7 @@
 <template>
   <!-- Form edit account -->
     <div class="vcb-pop-create font-ktr">
-      <n-modal v-model:show="show" :on-mask-click="closeModal" transform-origin="center" :on-after-enter="initial" class=" relative " >
+      <n-modal v-bind:show="show" :on-mask-click="closeModal" transform-origin="center" :on-after-enter="initial" class=" relative " >
         <n-card class="w-4/5 font-pvh text-xl flex">
           <!-- Member Form -->
           <div class="w-full flex flex-wrap" >

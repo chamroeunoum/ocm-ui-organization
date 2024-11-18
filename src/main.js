@@ -6,8 +6,7 @@ import VueAxios from 'vue-axios'
 
 import VueQrcodeReader from "vue3-qrcode-reader"
 
-import Vant from 'vant'
-import 'vant/lib/index.css'
+import KhmerNumber from './plugins/KhmerNumber.js'
 
 import NaiveUI from 'naive-ui'
 
@@ -43,11 +42,11 @@ const app = createApp(App)
 app.use(VueAxios, axios)
 app.provide('axios', app.config.globalProperties.axios) 
 app.use(VueQrcodeReader)
-app.use(Vant)
 app.use(VueToast)
 app.use(NaiveUI)
 app.use(HtmlToPaper)
 app.use(pinia)
+app.use(KhmerNumber)
 app.use(store)
 app.use(router)
 app.mount('#app')

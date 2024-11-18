@@ -1,11 +1,15 @@
 module.exports = {
     purge: [
         "./src/components/**/*.vue" ,
-        "./src/layouts/**/*.vue"
+        "./src/layouts/**/*.vue" 
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {
+            fontSize: {
+                'xxxs' : '.5rem' ,
+                'xxs' : '.6rem' ,
+            },
             backgroundSize: {
                 '90%': '90%' ,
                 '85%': '85%' ,
@@ -40,5 +44,7 @@ module.exports = {
             
         },
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/line-clamp'),
+    ],
 }

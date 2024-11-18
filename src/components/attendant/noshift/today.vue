@@ -1,32 +1,29 @@
 <template>
   <div class="w-full" >
-    <div class="w-full leading-9 font-moul -mt-12 mb-4 text-left pl-16" v-html="model.title" ></div>
     <!-- Top action panel of crud -->
-    <div class="flex w-full title-bar border-b px-4 border-gray-200 py-4 ">
-      <!-- Title of crud -->
-      <div class="flex w-64 h-10 py-1 title" >
-        <svg class="flex-none h-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M16 8h14v2H16z" fill="currentColor"></path><path d="M6 10.59L3.41 8L2 9.41l4 4l8-8L12.59 4L6 10.59z" fill="currentColor"></path><path d="M16 22h14v2H16z" fill="currentColor"></path><path d="M6 24.59L3.41 22L2 23.41l4 4l8-8L12.59 18L6 24.59z" fill="currentColor"></path></svg>
-        <div class="leading-9 font-moul" >វត្តមានប្រចាំខែ</div>
-      </div>
-      <!-- Actions button of the crud -->
-      <div class="flex-grow action-buttons flex-row-reverse flex p-2">
-        <!-- <div @click="$router.push('/attendants/shift')" class="py-1 h-10 px-6 leading-8 rounded-full mr-2 text-white bg-blue-500 cursor-pointer" >តាមវេន</div> -->
-        <div v-if=" currentTimeslot != null " class="py-1 h-10 px-6 leading-8 rounded-full mr-2 text-white bg-red-500 cursor-pointer" @click="checkout" >ចេញវេន</div>
-        <div v-if=" currentTimeslot != null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">អ្នកកំពុងនៅក្នុងវេន ៖ {{ currentTimeslot != null ? currentTimeslot.title + " " + currentTimeslot.start + " ដល់ " + currentTimeslot.end : '' }}</div>
-        <div v-if=" currentTimeslot == null " class="py-1 h-10 px-6 leading-8 rounded-full bg-blue-500 mr-2 text-white  cursor-pointer " @click="checkin" >ចូលវេន</div>
-        <div v-if=" currentTimeslot == null " class="py-1 h-10 px-3 leading-8 rounded text-blue-600 mr-2 ">ពេលនេះគឺវេន ៖ {{ activeTimeslot != null ? activeTimeslot.title + " " + activeTimeslot.start + " ដល់ " + activeTimeslot.end : '' }}</div>
-        <div class="py-3 h-10 px-3 leading-8" >
-          <digital-clock />
+    <div class="flex title-bar border-b border-gray-200 h-12 mt-8 p-2">
+      <div class="flex-grow action-buttons flex-row-reverse flex">
+        <div class="mt-0 ml-2 flex flex-wrap flex-row-reverse ">
+          <div v-if=" currentTimeslot != null && ( currentTimeslot != null )" class="invisible sm:visible md:visible lg:visible xl:visible px-2 leading-8 rounded text-blue-600 mr-2 ">អ្នកកំពុងនៅក្នុងវេន ៖ {{ $toKhmer( currentTimeslot.title + " " + currentTimeslot.start + " ដល់ " + currentTimeslot.end ) }}</div>
+          <div v-if=" currentTimeslot == null " class="h-8 p-2 leading-4 rounded-full mr-2 bg-white border border-blue-500 text-blue-500 cursor-pointer " @click="checkin" >{{ isCheckin == true ? 'ចុះវត្តមានចេញ' : 'ចុះវត្តមានចូល' }}</div>
+          <div v-if=" currentTimeslot == null && ( activeTimeslot != null ) " class="invisible sm:visible md:visible lg:visible xl:visible px-2 leading-8 rounded text-blue-600 mr-2 ">ពេលនេះគឺវេន ៖ {{ activeTimeslot.title + " " + activeTimeslot.start + " ដល់ " + activeTimeslot.end }}</div>
+          <div class="invisible sm:visible md:visible lg:visible xl:visible p-2 leading-4 " >
+            <digital-clock />
+          </div>
+        </div>
+        <div class="h-8 w-3/5 md:w-2/5 relative" >
+        </div>
+        <div class="h-8 mr-2 flex flex-wrap">
         </div>
       </div>
     </div>
     <!-- Table of crud -->
     <div class="vcb-table-panel flex flex-wrap ">
       <div v-if=" table.records.matched instanceof Object " class="w-4/5 mx-auto my-8 flex flex-wrap justify-between" >
-        <div class=" font-moul leading-7 text-blue-500" >{{  "ចំនួនថ្ងៃធ្វើការសរុប" }}<br/>{{ Object.keys(table.records.matched).length  }} ថ្ងៃ</div>
-        <div class=" font-moul leading-7 text-blue-500" >{{  "ចំនួនម៉ោងត្រូវធ្វើការសរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total.duration ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
-        <div class=" font-moul leading-7 text-green-500" >{{  "ចំនួនម៉ោងបានធ្វើការសរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total.workedTime ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
-        <div class=" font-moul leading-7 text-yellow-500" >{{  "ចំនួនម៉ោងធ្វើការ ខ្វះ ឬ លើស សរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total.workedTime - att.calculateTime.total.duration ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
+        <div class="l font-moul leading-7 text-blue-500" >{{  "ចំនួនថ្ងៃធ្វើការសរុប" }}<br/>{{ Object.keys(table.records.matched).length  }} ថ្ងៃ</div>
+        <div class=" font-moul leading-7 text-blue-500" >{{  "ចំនួនម៉ោងត្រូវធ្វើការសរុប" }}<br/>{{ Object.values(timeslots).map( ( tm ) => parseInt( tm.minutes ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
+        <div class=" font-moul leading-7 text-green-500" >{{  "ចំនួនម៉ោងបានធ្វើការសរុប" }}<br/>{{ Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total ) ).reduce( (acc,val) => {return acc + val } , 0 ) }} នាទី</div>
+        <div class=" font-moul leading-7 text-yellow-500" >{{  "ចំនួនម៉ោងធ្វើការសរុប ខ្វះ(-) ឬ លើស(+)" }}<br/>{{ ( Object.values(timeslots).map( ( tm ) => parseInt( tm.minutes ) ).reduce( (acc,val) => {return acc + val } , 0 ) ) - ( Object.values(table.records.matched).map( ( att ) => parseInt( att.calculateTime.total ) ).reduce( (acc,val) => {return acc + val } , 0 ) ) }} នាទី</div>
       </div>
       <Transition name="slide-fade" >
         <div v-if=" table.records.matched instanceof Object " class="w-4/5 mx-auto flex flex-wrap justify-between" >
@@ -36,7 +33,7 @@
                 <div class="attendant-header-row w-40 font-moul" >ថ្ងៃ</div>
                 <div class="attendant-header-row flex-grow font-moul" >វេនធ្វើការ</div>
                 <div class="attendant-header-row w-40 font-moul" >សរុប</div>
-                <div class="attendant-header-row w-40 font-moul" >លើស / ខ្វះ</div>
+                <!-- <div class="attendant-header-row w-40 font-moul" >លើស / ខ្វះ</div> -->
               </div>
               <div v-for="(day, index) in daysOfMonth" :key='index' class="w-full" >
                 <div v-if="table.records.matched[ day.date ] != undefined" class="flex day border-b border-gray-200 p-4" :style=" 'color: ' + ( daysOfWeek.find( (dow ) => dow.number == day.number ).color.hexa ) + '; ' " >
@@ -53,15 +50,15 @@
                         <td class="font-kantumruy py-1 text-right font-bold">សរុប</td>
                       </tr>
                       <tr v-for="(ct , ctIndex) in table.records.matched[ day.date ].calculateTime.checktimes" :key="ctIndex">
-                        <td class=" py-1 text-left " >{{ ct.timeslot.title }} {{ ct.timeslot.start +'-'+ct.timeslot.end }}</td>
-                        <td class=" py-1 text-left " >{{ ct.checkin }}</td>
-                        <td class=" py-1 text-left " >{{ ct.checkout }}</td>
-                        <td class=" py-1 text-right font-bold" >{{ ct.workedTime }}</td>
+                        <td class=" py-1 text-left " >{{ $toKhmer( ctIndex + 1 ) }}</td>
+                        <td class=" py-1 text-left " >{{ $toKhmer( ct.in.checktime ) }}</td>
+                        <td class=" py-1 text-left " >{{ ct.out != null ? $toKhmer( ct.out.checktime ) : '' }}</td>
+                        <td class=" py-1 text-right font-bold" >{{ $toKhmer( ct.spenttime ) }}</td>
                       </tr>
                     </table>
                   </div>
-                  <div class=" w-40 p-4 font-bold text-xl " >{{ table.records.matched[ day.date ].calculateTime.total.workedTime }}</div>
-                  <div :class="'w-40 p-4 font-bold  text-xl ' + ( ( table.records.matched[ day.date ].calculateTime.total.workedTime - table.records.matched[ day.date ].calculateTime.total.duration ) > 0 ? ' text-green-600 ' : ' text-red-600 ' )" >{{ table.records.matched[ day.date ].calculateTime.total.workedTime - table.records.matched[ day.date ].calculateTime.total.duration }}</div>
+                  <div class=" w-40 p-4 font-bold text-xl " >{{ $toKhmer( table.records.matched[ day.date ].calculateTime.total ) }}</div>
+                  <!-- <div class="w-40 p-4 font-bold  text-xl text-green-600" >{{ table.records.matched[ day.date ].calculateTime.total - table.records.matched[ day.date ].calculateTime.total }}</div> -->
                 </div>
               </div>
             </div>
@@ -281,6 +278,36 @@ export default {
     const today = computed(() => {
       return dateFormat( new Date( attendantDate.value ) , 'yyyy-mm-dd' )
     })
+
+    const isCheckin = ref( false )
+    function getCheckinStatus(){
+      if( table.records.matched != undefined && Array.isArray( table.records.matched ) && table.records.matched.length > 0 ){
+        let lastChecktime = null
+        daysOfMonth.value.reverse()
+        for( let dIndex in daysOfMonth.value ){
+          for( let rIndex in table.records.matched ){
+            if( table.records.matched[ daysOfMonth.value[dIndex].date ] == undefined ) continue
+            let attendant = table.records.matched[ daysOfMonth.value[dIndex].date ] 
+            if( attendant.calculateTime != undefined && ( attendant.calculateTime.checktimes != undefined && Array.isArray( attendant.calculateTime.checktimes ) && attendant.calculateTime.checktimes.length > 0 ) ){
+              lastChecktime = attendant.calculateTime.checktimes[ attendant.calculateTime.checktimes.length - 1 ]
+            }
+          }
+        }
+        daysOfMonth.value.reverse()
+        isCheckin.value = lastChecktime.out == null ? true : false
+      }
+    }
+        
+      // if( Array.isArray( res.data.records ) && res.data.records > 0 ){
+      //       let attendant = res.data.records [ res.data.records.length - 1 ]
+      //       console.log( attendant )
+      //       if( attendant.calculateTime != undefined && ( attendant.calculateTime.checktimes != undefined && Array.isArray( attendant.calculateTime.checktimes ) && attendant.calculateTime.checktimes.length > 0 ) ){
+      //         let lastChecktime = attendant.calculateTime.checktimes[ attendant.calculateTime.checktimes.length - 1 ]
+      //         console.log( lastChecktime )
+      //         isCheckin.value = lastChecktime.out == null ? true : false
+      //       }
+      //     }
+      //   }
 
     function filterRecords(helper=true){
       if( helper ){
@@ -547,6 +574,8 @@ export default {
           table.pagination.buttons.push(i)
         }
 
+        
+        getCheckinStatus()
         activeTimeslot.value = null
         currentTimeslot.value = null
         currentChecktime.value = null
@@ -672,6 +701,7 @@ export default {
       table ,
       filterPanel ,
       daysOfMonth ,
+      daysOfMonth ,
       daysOfWeek ,
       attendantDate ,
       today ,
@@ -704,7 +734,8 @@ export default {
       isToday ,
       checkin ,
       checkout,
-      dateFormat
+      dateFormat ,
+      isCheckin
     }
   }
 }

@@ -43,7 +43,7 @@
             <div class="p-2 w-full leading-5 flex relative cursor-pointer hover:shadow border border-gray-200" @click="$router.push('/attendant/'+record.date+'/month/'+record.user.id+'/user')" >
               <!-- Photo -->
               <div class="w-4/12 mr-2" >
-                <img v-if="record.user.avatar_url==null||record.user.avatar_url==undefined||record.user.avatar_url==''" src="./../../assets/logo.svg" class="w-24 h-24 mx-auto rounded-full" />
+                <img v-if="record.user.avatar_url==null||record.user.avatar_url==undefined||record.user.avatar_url==''" :src="ocmLogoUrl" class="w-24 h-24 mx-auto rounded-full" />
                 <img v-if="record.user.avatar_url!=null&&record.user.avatar_url!=undefined&&record.user.avatar_url!=''" :src="record.user.avatar_url" class="w-24 h-24 mx-auto rounded-full" />
                 <div class="py-4 px-2 leading-5  text-xs text-center font-moul w-full" >{{ record.user.lastname }}&ensp;{{ record.user.firstname }}</div>
               </div>
@@ -125,6 +125,7 @@ import { TrashOutline, CloseCircleOutline } from '@vicons/ionicons5'
 import { useDialog, useMessage, useNotification } from 'naive-ui'
 import { Edit20Regular, Key16Regular, Save20Regular, Add20Regular, Search20Regular , ContactCard28Regular } from '@vicons/fluent'
 import dateFormat from "dateformat";
+import ocmLogoUrl from '@assets/logo.svg'
 /**
  * CRUD component form
  */
@@ -448,7 +449,8 @@ export default {
        */
       getEffectiveDayName ,
       minutesToStringTime ,
-      getDayOfWeek
+      getDayOfWeek ,
+      ocmLogoUrl
     }
   }
 }

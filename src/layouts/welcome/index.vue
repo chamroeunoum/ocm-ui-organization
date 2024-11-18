@@ -9,12 +9,12 @@
         <div class="text-center mb-8" >
           <div class="my-2 h-8 font-moul text-yellow-500">ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
           <div class="my-2 h-6 text-5xl font-tacteing leading-8" >3</div>
-          <div class="mt-4 mb-2 font-moul">សូមស្វាគមន៍មកកាន់ ប្រព័ន្ធគ្រប់គ្រងកិច្ចប្រជុំគណៈរដ្ឋមន្ត្រី</div>
+          <div class="mt-4 mb-2 font-moul">សូមស្វាគមន៍មកកាន់ <br/>{{ $store.state.system.name }}</div>
         </div>
         <router-link to="/login" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >ចូលប្រើប្រព័ន្ធ</router-link>
-        <router-link to="/tv" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >Normal Monitor</router-link>
-        <router-link to="/tvsony43" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >TV Sony 43 Ince</router-link>
-        <router-link to="/smartwhiteboard" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >Smart Whiteboard</router-link>
+        <!-- <router-link to="/tv" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >Normal Monitor</router-link> -->
+        <!-- <router-link to="/tvsony43" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >កាលវិភាគប្រជុំ</router-link> -->
+        <!-- <router-link to="/smartwhiteboard" class="font-moul mx-8 border border-gray-300 rounded p-4 hover:border-green-600 duration-300" >Smart Whiteboard</router-link> -->
       </div>
     </Transition>
   </div>

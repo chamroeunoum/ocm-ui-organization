@@ -3,9 +3,6 @@ import { isAdmin, isAuth } from './authentication'
 
 import LoginComponent from './../layouts/login/index.vue'
 import WelcomeComponent from './../layouts/welcome/index.vue'
-import SmartWhiteboardComponent from './../layouts/welcome/smartwhiteboard.vue'
-import TVSony43Component from './../layouts/welcome/tvsony43.vue'
-import TVComponent from './../layouts/welcome/tv.vue'
 
 import UserComponent from './../components/user/index.vue'
 import UserProfileComponent from './../components/user/profile.vue'
@@ -15,21 +12,30 @@ import DashboardComponent from './../layouts/dashboard/index.vue'
 import DashboardWidget from './../components/main/dashboard.vue'
 
 /**
+ * Card Officer
+ */
+import DetailCardComponent from './../layouts/staff/card.vue'
+/**
+ * Check in and out
+ */
+import QrCheckinAndCheckoutComponent from './../layouts/checkinout/check.vue'
+import QrCheckinAndCheckoutSuccessComponent from './../layouts/checkinout/success.vue'
+
+/**
  * Folder Section
  */
 import FolderComponent from './../components/folder/index.vue'
-import FolderListComponent from './../components/folder/thumb.vue'
-import FolderDetailComponent from './../components/folder/detail.vue'
-import FolderRegulatorComponent from './../components/folder/regulator.vue'
+import FolderThumbnailComponent from './../components/folder/crud/lists/thumbnail.vue'
+// import FolderTableComponent from './../components/folder/crud/lists/table.vue'
 /**
  * Regulators
  */
 import RegulatorComponent from './../components/regulator/index.vue'
-import RegulatorListComponent from './../components/regulator/list.vue'
+import RegulatorThumbnailComponent from './../components/regulator/crud/lists/thumbnail.vue'
 /**
  * Global Regulator
  */
-import GlobalSharedRegulatorComponent from './../components/regulator/globalshare/index.vue'
+// import GlobalSharedRegulatorComponent from './../components/regulator/globalshare/index.vue'
 
 /**
  * Attendant Shift
@@ -45,12 +51,6 @@ import AttendantNoShiftComponent from './../components/attendant/noshift/index.v
 import AttendantNoShiftListComponent from './../components/attendant/noshift/list.vue'
 import AttendantNoShiftDayComponent from './../components/attendant/noshift/today.vue'
 /**
- * Meeting
- */
-import MeetingComponent from './../components/meeting/index.vue'
-import MeetingListComponent from './../components/meeting/list.vue'
-
-/**
  * Task
  */
 import TaskComponent from './../components/task/index.vue'
@@ -59,10 +59,9 @@ import TaskListComponent from './../components/task/list.vue'
 /**
  * Task
  */
-import ReportComponent from './../components/report/index.vue'
-import ReportListComponent from './../components/report/list.vue'
-import ReporByOrganizationComponent from './../components/report/totalbyorganization.vue'
-import ReporByLeaderComponent from './../components/report/totalbyleader.vue'
+import CardComponent from './../components/card/index.vue'
+import CardThumbnailComponent from './../components/card/crud/lists/thumbnail.vue'
+import CardInfoComponent from './../components/card/crud/lists/card.vue'
 
 
 /**
@@ -77,14 +76,16 @@ export const getRoutes = () => {
                 path: '', 
                 name: "EmptyURI" ,
                 redirect: to => {
-                    return '/dashboard'
+                    // return '/dashboard'
+                    return '/cards'
                 }
             },
             { 
                 path: '/', 
                 name: "RootURI" ,
                 redirect: to => {
-                    return '/dashboard'
+                    // return '/dashboard'
+                    return '/cards'
                 }
             },
             // {
@@ -102,64 +103,10 @@ export const getRoutes = () => {
                     return '/attendants/noshift'
                 }
             },
-            // {
-            // name: 'AttendantShift',
-            // path: '/attendants/shift',
-            // component: AttendantShiftComponent ,
-            //     meta: { 
-            //         transition: 'slide-right' ,
-            //         requiresAuth: true,
-            //         is_admin : true
-            //     },
-            //     children: [
-            //         {
-            //             name: "AttendantShiftList" ,
-            //             path: '' ,
-            //             component: AttendantShiftDayComponent
-            //         },
-            //         {
-            //             name: "AttendantShiftMonth" ,
-            //             path: 'month' ,
-            //             component: AttendantShiftListComponent
-            //         },
-            //         {
-            //             name: "AttendantShiftDay" ,
-            //             path: 'today' ,
-            //             component: AttendantShiftDayComponent
-            //         }
-            //     ]
-            // },
             {
-                name: 'AttendantNoShift',
-                path: '/attendants/noshift',
-                component: AttendantNoShiftComponent ,
-                    meta: { 
-                        transition: 'slide-right' ,
-                        requiresAuth: true,
-                        is_admin : true
-                    },
-                    children: [
-                        {
-                            name: "AttendantNoShiftList" ,
-                            path: '' ,
-                            component: AttendantNoShiftDayComponent
-                        },
-                        {
-                            name: "AttendantNoShiftMonth" ,
-                            path: 'month' ,
-                            component: AttendantNoShiftListComponent
-                        },
-                        {
-                            name: "AttendantNoShiftDay" ,
-                            path: 'today' ,
-                            component: AttendantNoShiftDayComponent
-                        }
-                    ]
-                },
-            {
-                name: 'Meeting',
-                path: '/meetings',
-                component: MeetingComponent ,
+            name: 'AttendantShift',
+            path: '/attendants',
+            component: AttendantShiftComponent ,
                 meta: { 
                     transition: 'slide-right' ,
                     requiresAuth: true,
@@ -167,9 +114,51 @@ export const getRoutes = () => {
                 },
                 children: [
                     {
-                        name: "MeetingList" ,
+                        name: "AttendantShiftList" ,
                         path: '' ,
-                        component: MeetingListComponent
+                        component: AttendantShiftDayComponent
+                    },
+                    {
+                        name: "AttendantShiftList" ,
+                        path: 'shift' ,
+                        component: AttendantShiftDayComponent
+                    },
+                    {
+                        name: "AttendantShiftMonth" ,
+                        path: 'month' ,
+                        component: AttendantShiftListComponent
+                    },
+                    {
+                        name: "AttendantShiftDay" ,
+                        path: 'today' ,
+                        component: AttendantShiftDayComponent
+                    }
+                ]
+            },
+            {
+                name: 'AttendantNoShift',
+                path: '/attendants/noshift',
+                component: AttendantNoShiftComponent ,
+                meta: { 
+                    transition: 'slide-right' ,
+                    requiresAuth: true,
+                    is_admin : true
+                },
+                children: [
+                    {
+                        name: "AttendantNoShiftList" ,
+                        path: '' ,
+                        component: AttendantNoShiftDayComponent
+                    },
+                    {
+                        name: "AttendantNoShiftMonth" ,
+                        path: 'month' ,
+                        component: AttendantNoShiftListComponent
+                    },
+                    {
+                        name: "AttendantNoShiftDay" ,
+                        path: 'today' ,
+                        component: AttendantNoShiftDayComponent
                     }
                 ]
             },
@@ -191,6 +180,23 @@ export const getRoutes = () => {
                 ]
             },
             {
+                name: 'Card',
+                path: '/cards',
+                component: CardComponent ,
+                meta: { 
+                    transition: 'slide-right' ,
+                    requiresAuth: true,
+                    is_admin : true
+                },
+                children: [
+                    {
+                        name: "CardInfoComponent" ,
+                        path: '' ,
+                        component: CardInfoComponent
+                    }
+                ]
+            },
+            {
                 name: 'Folder' ,
                 path: '/folders',
                 component: FolderComponent ,
@@ -201,53 +207,16 @@ export const getRoutes = () => {
                 },
                 children: [
                     {
-                        name: "FolderList" ,
+                        name: "FolderThumbnailComponent" ,
                         path: '' ,
-                        component: FolderListComponent
-                    },
-                    {
-                        name: "FolderDetail" ,
-                        path: ':id/detail' ,
-                        component: FolderDetailComponent
-                    },
-                    {
-                        name: "FolderRegulators" ,
-                        path: ':id/regulators' ,
-                        component: FolderRegulatorComponent
-                    },
+                        component: FolderThumbnailComponent
+                    }
                 ]
             },
-              {
-                  name: 'Regulator' ,
-                  path: '/regulators',
-                  component: RegulatorComponent ,
-                  meta: { 
-                      transition: 'slide-right' ,
-                      requiresAuth: true,
-                      is_admin : true
-                  },
-                  children: [
-                      {
-                          name: "RegulatorList" ,
-                          path: '' ,
-                          component: RegulatorListComponent
-                      }
-                  ]
-              },
-              {
-                  name: "GlobalSharedRegulator" ,
-                  path: '/globalshare/:serial' ,
-                  component: GlobalSharedRegulatorComponent ,
-                  meta: { 
-                      transition: 'slide-right' ,
-                      requiresAuth: false,
-                      is_admin : false
-                  }
-              },
             {
-                name: 'Report',
-                path: '/reports',
-                component: ReportComponent ,
+                name: 'Regulator' ,
+                path: '/regulators',
+                component: RegulatorComponent ,
                 meta: { 
                     transition: 'slide-right' ,
                     requiresAuth: true,
@@ -255,22 +224,22 @@ export const getRoutes = () => {
                 },
                 children: [
                     {
-                        name: "ReportList" ,
+                        name: "RegulatorThumbnailComponent" ,
                         path: '' ,
-                        component: ReportListComponent
-                    },
-                    {
-                        name: "ReporByOrganization" ,
-                        path: 'totalbyorganization' ,
-                        component: ReporByOrganizationComponent
-                    },
-                    {
-                        name: "ReporByLeader" ,
-                        path: 'totalbyleader' ,
-                        component: ReporByLeaderComponent
-                    },
+                        component: RegulatorThumbnailComponent
+                    }
                 ]
             },
+            // {
+            //     name: "GlobalSharedRegulator" ,
+            //     path: '/globalshare/:serial' ,
+            //     component: GlobalSharedRegulatorComponent ,
+            //     meta: { 
+            //         transition: 'slide-right' ,
+            //         requiresAuth: false,
+            //         is_admin : false
+            //     }
+            // },
             /**
              * Authenticated routes
              */
@@ -314,25 +283,9 @@ export const getRoutes = () => {
                 }
             },
             {
-                name: 'TV',
-                path: '/tv',
-                component: TVComponent ,
-                meta: {
-                    // transition: 'fade'
-                }
-            },
-            {
-                name: 'SMARTWHITEBOARD',
-                path: '/smartwhiteboard',
-                component: SmartWhiteboardComponent ,
-                meta: {
-                    // transition: 'fade'
-                }
-            },
-            {
-                name: 'TVSONY43',
-                path: '/tvsony43',
-                component: TVSony43Component ,
+                name: 'OfficerCard',
+                path: '/officer/card/:id',
+                component: DetailCardComponent ,
                 meta: {
                     // transition: 'fade'
                 }
@@ -346,14 +299,14 @@ export const getRoutes = () => {
             path: '', 
             name: "EmptyURI" ,
             redirect: to => {
-                return '/welcome'
+                return '/login'
             }
         },
         { 
             path: '/', 
             name: "RootURI" ,
             redirect: to => {
-                return '/welcome'
+                return '/login'
             }
         },
         {
@@ -373,25 +326,25 @@ export const getRoutes = () => {
             }
         },
         {
-            name: 'TV',
-            path: '/tv',
-            component: TVComponent ,
+            name: 'OfficerCard',
+            path: '/officer/card/:id',
+            component: DetailCardComponent ,
             meta: {
                 // transition: 'fade'
             }
         },
         {
-            name: 'SMARTWHITEBOARD',
-            path: '/smartwhiteboard',
-            component: SmartWhiteboardComponent ,
+            name: 'QrCheckinAndCheckoutComponent',
+            path: '/officer/checkinout/:id',
+            component: QrCheckinAndCheckoutComponent ,
             meta: {
                 // transition: 'fade'
             }
         },
         {
-            name: 'TVSONY43',
-            path: '/tvsony43',
-            component: TVSony43Component ,
+            name: 'QrCheckinAndCheckoutComponent',
+            path: '/officer/attendant/check/:id/success',
+            component: QrCheckinAndCheckoutSuccessComponent ,
             meta: {
                 // transition: 'fade'
             }

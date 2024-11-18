@@ -1,8 +1,8 @@
 <template>
     <!-- Start Widget -->
     <div :class="dgClass!=undefined && dgClass.length > 0 ? dgClass : 'time' ">{{ 
-    // clock.date + ' ' + 
-    clock.time }}</div>
+    // $toKhmer( clock.date ) + ' ' + 
+    $toKhmer( clock.time ) }}</div>
     <!-- End widget -->
 </template>
 <script>

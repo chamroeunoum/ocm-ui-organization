@@ -27,7 +27,7 @@ const actions = {
    * Login
    */
    async login({state, commit, rootState }, params ){
-    return await auth.login(rootState.apiServer+"/authentication/login", params) 
+    return await auth.login(import.meta.env.VITE_API_SERVER+"/authentication/login", params) 
    },
   
   /**
@@ -37,14 +37,14 @@ const actions = {
     /**
      * Logout user
      */
-    return await auth.logout(rootState.apiServer+"/authentication/logout",params)
+    return await auth.logout(import.meta.env.VITE_API_SERVER+"/authentication/logout",params)
   },
 
   /**
    * Signup
    */
    async signup({state, commit, rootState }, params ){
-    return await auth.signup(rootState.apiServer+"/authentication/signup", params) 
+    return await auth.signup(import.meta.env.VITE_API_SERVER+"/authentication/signup", params) 
    },
 
   /**

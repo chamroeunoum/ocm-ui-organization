@@ -9,7 +9,7 @@
           <div class="my-2 font-moul text-yellow-500">ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
           <div class="my-2 text-4xl font-tacteing" >3</div>
           <div class="my-2 font-moul hidden">{{ store.state.company.name }}</div>
-          <div class="my-2 font-moul hidden">នាយកដ្ឋានឯកសារអេឡិចត្រូនិចនិងព័ត៌មានវិទ្យា</div>
+          <div class="my-2 font-moul hidden">នាយកដ្ឋានរដ្ឋបាល និងធនធានមនុស្ស</div>
         </div>
         <div class="w-full mx-auto my-2 leading-6 text-center font-moul ">{{ store.state.system.name }}</div>
         <div class="mx-auto mt-8 w-4/5 sm:w-3/5 md:w-2/5 lg:w-2/5 xl:w-1/4 2xl:w-1/5" >
@@ -45,14 +45,6 @@
           </n-space>
         </div>
         <div class="w-full my-8">
-          <!-- <n-button type="default" class="w-24 m-2" @click="$router.push('/search')"  >
-            ស្វែងរក
-            <template #icon>
-              <n-icon size="16" class='text-red-500 ' >
-                <svg class="text-red-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M6.5 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-.166h.333a1.167 1.167 0 0 0 0-2.334H6.5zm.833 1.334H7V12h.333a.167.167 0 0 1 0 .334zM12 11.499a.5.5 0 0 1 .5-.499h.999a.5.5 0 0 1 0 1h-.5v.335h.5a.5.5 0 1 1 0 1h-.5l.001.164a.5.5 0 0 1-1 .002L12 12.834L12 11.499zM9.498 11a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5H10a1.5 1.5 0 0 0 0-3h-.502zm.5 2v-1H10a.5.5 0 0 1 0 1h-.002zM4 4a2 2 0 0 1 2-2h4.585a1.5 1.5 0 0 1 1.061.44l3.914 3.914a1.5 1.5 0 0 1 .44 1.06v1.668a1.5 1.5 0 0 1 .998 1.414v4.003A1.5 1.5 0 0 1 16 15.913V16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-.087A1.5 1.5 0 0 1 3 14.5v-4.003A1.5 1.5 0 0 1 4 9.082V4zm11 4h-3.5A1.5 1.5 0 0 1 10 6.5V3H6a1 1 0 0 0-1 1v4.996h10V8zM5 15.999A1 1 0 0 0 6 17h8a1 1 0 0 0 1-1.001H5zm6-12.792V6.5a.5.5 0 0 0 .5.5h3.293L11 3.207zM4.5 9.996a.5.5 0 0 0-.5.5v4.003a.5.5 0 0 0 .5.5h10.997a.5.5 0 0 0 .5-.5v-4.003a.5.5 0 0 0-.5-.5H4.501z" fill="currentColor"></path></g></svg>
-              </n-icon>
-            </template>
-          </n-button> -->
           <n-button type="success" class="w-24 m-2 " :loading="loading" @click="funcLogin"  >
             ចូល
             <template #icon>
@@ -61,36 +53,19 @@
               </n-icon>
             </template>
           </n-button>
+          <!-- <n-button type="default" class="m-2" @click="$router.push('/tvsony43')"  >
+            កាលវិភាគប្រជុំ
+            <template #icon>
+              <svg class="text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16"><g fill="none"><path d="M2.742 3.459A2 2 0 0 1 4.668 2h6.668a2 2 0 0 1 1.926 1.459l1.66 5.898A2.08 2.08 0 0 1 12.917 12H7.002v-1h5.916a1.08 1.08 0 0 0 1.04-1.372l-1.66-5.899A1 1 0 0 0 11.337 3H4.668a1 1 0 0 0-.963.73L3.348 5H2.5c-.066 0-.13.003-.194.007l.435-1.548zM6.952 14h4.551a.5.5 0 1 0 0-1h-4.5v.5c0 .171-.018.338-.05.5zM3.501 9.5a.75.75 0 1 0 0-1.5a.75.75 0 0 0 0 1.5zM1 7.5A1.5 1.5 0 0 1 2.5 6h2.001a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5h-2A1.5 1.5 0 0 1 1 13.5v-6zM2.5 7a.5.5 0 0 0-.5.5v6a.5.5 0 0 0 .5.5h2.001a.5.5 0 0 0 .5-.5v-6a.5.5 0 0 0-.5-.5h-2z" fill="currentColor"></path></g></svg>
+            </template>
+          </n-button> -->
         </div>
-        <!-- <div class="w-full mt-8 flex justify-center text-xs">
-          <router-link to="/register" class="mr-1 p-2 " >
-            <n-icon size="18" class='text-blue-500 pt-1' ><PersonOutlined /></n-icon>ចូលជាសមាជិក
-          </router-link>
-          <router-link to="/password/forgot" class="ml-1 p-2 "  >
-            <n-icon size="18" class='text-blue-500 mr-1 pt-1' ><VpnKeyOutlined /></n-icon>ភ្លេចពាក្យសម្ងាត់ ?
-          </router-link>
-        </div>
-        <div class="w-full mt-8 hidden text-xs">
-          ចូលប្រើប្រាស់តាមរយះ គណនី
-          <div class="g-signin2 w-20 h-20" data-onsuccess="onSignIn"></div>
-        </div>
-        <div class="w-full mt-8 hidden">
-          <div class="mx-auto underline mb-4 text-xs" >ទំនាក់ទំនងមកយើងខ្ញុំ</div>
-          <a class="w-50 mx-2 text-xs" target="_blank_" href="https://t.me/edmsocm"  >
-            <n-icon size="22" class=' pt-1 mr-2 ' >
-              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="text-blue-500" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19c-.14.75-.42 1-.68 1.03c-.58.05-1.02-.38-1.58-.75c-.88-.58-1.38-.94-2.23-1.5c-.99-.65-.35-1.01.22-1.59c.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02c-.09.02-1.49.95-4.22 2.79c-.4.27-.76.41-1.08.4c-.36-.01-1.04-.2-1.55-.37c-.63-.2-1.12-.31-1.08-.66c.02-.18.27-.36.74-.55c2.92-1.27 4.86-2.11 5.83-2.51c2.78-1.16 3.35-1.36 3.73-1.36c.08 0 .27.02.39.12c.1.08.13.19.14.27c-.01.06.01.24 0 .38z" fill="currentColor"></path></svg>
-            </n-icon>តេលេក្រាម
-          </a>
-          <a class="w-50 mx-2 text-xs"  href="mailto:edmsocm@gmail.com" >
-            <n-icon size="22" class='text-blue-500 pt-1 mr-2 ' ><EmailOutlined /></n-icon>អ៊ីមែល
-          </a>
-        </div> -->
       </div>
     </Transition>
     <div class="fixed bottom-0 mx-auto w-full">
       <FooterComponent />
     </div>
-    <FrameCorner4Component />
+
   </div>
 </template>
 <script>
@@ -98,7 +73,6 @@ import { getUser } from './../../plugins/authentication'
 import { getMaxUploadFilesize, setMaxUploadFilesize } from './../../plugins/file'
 import { getRoutes } from './../../plugins/route'
 import FooterComponent from './../../components/footer/copy-right.vue'
-import FrameCorner4Component from './../../components/widgets/frame/corner4.vue'
 import { Key20Regular } from "@vicons/fluent";
 import { AlternateEmailOutlined , PersonOutlined, VpnKeyOutlined, EmailOutlined } from '@vicons/material'
 import { Login, DocumentPdf } from '@vicons/carbon'
@@ -115,8 +89,7 @@ export default {
     FooterComponent,
     PersonOutlined ,
     VpnKeyOutlined ,
-    EmailOutlined ,
-    FrameCorner4Component
+    EmailOutlined 
   },
   setup(){
     /**
@@ -229,7 +202,7 @@ export default {
        * Components
        */
       Key20Regular ,
-      AlternateEmailOutlined ,
+      AlternateEmailOutlined
     }
   },
   mounted(){

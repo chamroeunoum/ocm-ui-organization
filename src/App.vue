@@ -6,7 +6,7 @@
 <template>
   <n-dialog-provider>
     <n-message-provider placement="top" >
-      <n-notification-provider placement="bottom" >
+      <n-notification-provider placement="top" >
         <router-view v-slot="{ Component, route }">
           <!-- Use any custom transition and fallback to `fade` -->
           <transition :name="route.meta.transition || ''">

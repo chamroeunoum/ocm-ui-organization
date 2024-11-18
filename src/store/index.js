@@ -2,15 +2,14 @@ import { createStore, createLogger } from 'vuex'
 import auth from './modules/authentication'
 import user from './modules/user'
 import attendant from './modules/attendant'
-import meeting from './modules/meeting'
 import organization from './modules/organization'
-import type from './modules/type'
-import legaldraft from './modules/legaldraft'
-import room from './modules/room'
+import position from './modules/position'
+import countesy from './modules/countesy'
 import task from './modules/task'
 import regulator from './modules/regulator'
 import search_regulator from './modules/search_regulators'
 import folder from './modules/folder'
+import officer from './modules/officer'
 import regulatorType from './modules/regulator/type'
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -18,15 +17,14 @@ const debug = process.env.NODE_ENV !== 'production'
 export default createStore({
   state: {
     // Local computer
-    apiServer: 'http://127.0.0.1:8000/api/meeting' ,
-    // apiServer: 'https://edocservice.sctthaicambodia.com/api/meeting' ,
+    server: 'http://127.0.0.1:8000/api/hradmin' ,
     // Server 103.16.62.69
-    // apiServer: 'https://edoc.onetechcambodia.com/api/meeting' ,
+    // apiServer: 'https://apis.ocm.gov.kh/api/hradmin' ,
     company: {
       name: 'ទីស្ដីការគណៈរដ្ឋមន្ត្រី'
     },
     system: {
-      name: 'ប្រព័ន្ធគ្រប់គ្រង កិច្ចប្រជុំគណៈរដ្ឋមន្ត្រី'
+      name: 'ប្រព័ន្ធគ្រប់គ្រង រដ្ឋបាល និងធនធានមនុស្ស'
     }
     // branch: '' 
   },
@@ -35,16 +33,14 @@ export default createStore({
     user ,
     folder ,
     attendant ,
-    meeting ,
+    officer,
     organization ,
-    room ,
+    position , 
+    countesy ,
     regulator ,
     search_regulator ,
     regulatorType ,
-    organization ,
-    type ,
-    task ,
-    legaldraft
+    task
   },
   strict: debug,
   plugins: debug ? 

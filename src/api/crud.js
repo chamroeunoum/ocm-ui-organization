@@ -1,10 +1,15 @@
 import axios from "axios"
-import { getAuthorization } from "../plugins/authentication"
+import { getAuthorization } from "./../plugins/authentication"
 export default {
-  async list(url,params,useAuth=true){
-    return useAuth 
-    ? await axios({ method: 'GET' , url: url , data: params , headers: { 'Authorization' : getAuthorization() } }) 
-    : await axios({ method: 'GET' , url: url , data: params })
+  async list(url,params){
+    return await axios({
+      method: 'GET' ,
+      url: url ,
+      data: params ,
+      headers: {
+        'Authorization' : getAuthorization() // bear token
+      }
+    })
   },
   async read(url,params){
     return await axios({
@@ -12,7 +17,7 @@ export default {
       url: url ,
       data: params,
       headers: {
-        'Authorization' : getAuthorization()
+        'Authorization' : getAuthorization() // bear token
       }
     })
   },
@@ -22,7 +27,7 @@ export default {
       url: url ,
       data: params,
       headers: {
-        'Authorization' : getAuthorization()
+        'Authorization' : getAuthorization() // bear token
       }
     })
   },
@@ -32,7 +37,17 @@ export default {
       url: url ,
       data: params,
       headers: {
-        'Authorization' : getAuthorization()
+        'Authorization' : getAuthorization() // bear token
+      }
+    })
+  },
+  async patch(url,params){
+    return await axios({
+      method: 'PATCH' ,
+      url: url ,
+      data: params,
+      headers: {
+        'Authorization' : getAuthorization() // bear token
       }
     })
   },
@@ -42,62 +57,18 @@ export default {
       url: url ,
       data: params,
       headers: {
-        'Authorization' : getAuthorization()
+        'Authorization' : getAuthorization() // bear token
       }
     })
   },
-  async upload(url,formData ){
+  async upload(url,formData){
     return await axios.post( url , formData ,
       { 
         headers: {
-          Authorization : getAuthorization() ,
-          'Content-Type': 'multipart/form-data'
+          Authorization : getAuthorization()  , // bear token
+          'Content-Type': 'multipart/form-data' ,
         }
       }
     )
-  },
-  async compact(url){
-    return await axios({
-      method: 'GET' ,
-      url: url ,
-      data: params ,
-      headers: {
-        'Authorization' : getAuthorization()
-      }
-    })
-  },
-  async activate(api){
-    return await axios({
-      method: 'PUT' ,
-      url: url ,
-      data: params,
-      headers: {
-        'Authorization' : getAuthorization()
-      }
-    })
-  },
-  async get(url,params){
-    return await axios({
-      method: 'GET' ,
-      url: url ,
-      data: params
-    })
-  },
-  async post(url,params){
-    return await axios({
-      method: 'POST' ,
-      url: url ,
-      data: params,
-      // headers: {
-      //   'Authorization' : getAuthorization()
-      // }
-    })
-  },
-  async put(url,params){
-    return await axios({
-      method: 'PUT' ,
-      url: url ,
-      data: params
-    })
-  },
+  }
 }

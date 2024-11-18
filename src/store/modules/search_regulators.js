@@ -24,7 +24,7 @@ const getters = {
 const actions = {
   async list ({ state, commit, rootState },params) {
     return await crud.list(
-      rootState.apiServer+"/"+state.model.name + "?" + new URLSearchParams({
+      import.meta.env.VITE_API_SERVER+"/"+state.model.name + "?" + new URLSearchParams({
         fid: params.fid ,
         year: params.year ,
         types: params.types ,
@@ -39,10 +39,10 @@ const actions = {
     )
   },
   async read ({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/"+params.id)
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/"+params.id)
   },
   async pdf ({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/pdf" + ( params !== undefined ? "?" + new URLSearchParams(
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/pdf" + ( params !== undefined ? "?" + new URLSearchParams(
       ( params.id != undefined && parseInt( params.id ) > 0 ) ? { id : params.id } 
         : (
           typeof params.serial == 'string' && params.serial.length > 0 ? { serial : params.serial } : ''
@@ -50,14 +50,14 @@ const actions = {
     ).toString(): ""))
   },
   async compact ({ state, commit, rootState },params) {
-    return await crud.list(rootState.apiServer+"/"+state.model.name + "/compact" + ( params !== undefined ? "?" + new URLSearchParams({
+    return await crud.list(import.meta.env.VITE_API_SERVER+"/"+state.model.name + "/compact" + ( params !== undefined ? "?" + new URLSearchParams({
       page: params.page ,
       perPage : params.perPage ,
       search: params.search ,
     }).toString(): ""))
   },
   async type ({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/types")
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/types")
   },
 }
 

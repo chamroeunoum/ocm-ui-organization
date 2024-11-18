@@ -24,7 +24,7 @@ const getters = {
 // actions
 const actions = {
   async list ({ state, commit, rootState },params) {
-    return await crud.list(rootState.apiServer+"/"+state.model.name + "?" + new URLSearchParams({
+    return await crud.list(import.meta.env.VITE_API_SERVER+"/"+state.model.name + "?" + new URLSearchParams({
         search: params.search ,
         perPage: params.perPage ,
         page: params.page
@@ -32,46 +32,55 @@ const actions = {
     )
   },
   // async list ({ state, commit, rootState },params) {
-  //   return await crud.list(rootState.apiServer+"/"+state.model.name,params)
+  //   return await crud.list(import.meta.env.VITE_API_SERVER+"/"+state.model.name,params)
   // },
   async read ({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/"+params.id)
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/"+params.id)
   },
   async update ({ state, commit, rootState },params) {
-    return await crud.update(rootState.apiServer+"/"+state.model.name+"/authenticated",params)
+    return await crud.update(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/authenticated",params)
+  },
+  async officerUpdate ({ state, commit, rootState },params) {
+    return await crud.update(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/officer/update",params)
+  },
+  async peopleUpdate ({ state, commit, rootState },params) {
+    return await crud.update(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/people/update",params)
   },
   async passwordChange ({ state, commit, rootState },params) {
-    return await crud.update(rootState.apiServer+"/authentication/password/change",params)
+    return await crud.update(import.meta.env.VITE_API_SERVER+"/authentication/password/change",params)
   },
   async checkUsername({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/username/exist?username="+params.username)
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/username/exist?username="+params.username)
   },
   async checkPhone({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/phone/exist?phone="+params.phone)
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/phone/exist?phone="+params.phone)
   },
   async checkEmail({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/"+state.model.name+"/email/exist?email="+params.email)
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/email/exist?email="+params.email)
   },
   async signupConfirmation({ state, commit, rootState },params) {
-    return await crud.put(rootState.apiServer+"/authentication/signup/activate",params)
+    return await crud.put(import.meta.env.VITE_API_SERVER+"/authentication/signup/activate",params)
   },
   async passwordForgot({ state, commit, rootState },params) {
-    return await crud.put(rootState.apiServer+"/password/forgot",params)
+    return await crud.put(import.meta.env.VITE_API_SERVER+"/password/forgot",params)
   },
   async passwordForgotConfirmation({ state, commit, rootState },params) {
-    return await crud.put(rootState.apiServer+"/password/forgot/confirm",params)
+    return await crud.put(import.meta.env.VITE_API_SERVER+"/password/forgot/confirm",params)
   },
   async passwordUpdate({ state, commit, rootState },params) {
-    return await crud.put(rootState.apiServer+"/password/reset",params)
+    return await crud.put(import.meta.env.VITE_API_SERVER+"/password/reset",params)
   },
   async upload({ state, commit, rootState },formData) {    
-    return await crud.upload(rootState.apiServer+"/"+state.model.name+"/upload",formData)
+    return await crud.upload(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/upload",formData)
+  },
+  async checkIdentification ({ state, commit, rootState },params) {
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/checkidentification/"+params.term+'/'+params.type)
   },
   /**
    * Dashboard functions
    */
   async total ({ state, commit, rootState },params) {
-    return await crud.read(rootState.apiServer+"/dashboard/"+state.model.name+"/total")
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/dashboard/"+state.model.name+"/total")
   },
 }
 
