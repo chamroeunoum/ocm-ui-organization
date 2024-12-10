@@ -36,7 +36,7 @@
               </div> -->
           </div>
           <div class="w-full my-2" >
-            <qrcode-vue :value="getPublicCardUrl(officer)" :size="100" level="H" class=" mx-auto p-1 border border-gray-300 rounded-md bg-white" :render-as="'svg'" />
+            <qrcode-vue :value="getPublicCardUrl(officer)" :size="100" level="L" class=" mx-auto p-1 border border-gray-300 rounded-md bg-white" :render-as="'svg'" />
           </div>
           <!-- User current location in the map -->
           <Transition name="slide-fade" >
@@ -124,7 +124,9 @@
       })
 
       function getPublicCardUrl(record){
-        return window.location.origin+'/#/officer/card/'+record.id
+        // https://hr.ocm.gov.kh/#/officer/card/'+res.data.record.public_key
+        // return window.location.origin+'/#/officer/card/'+record.public_key
+        return 'https://hr.ocm.gov.kh/#/officer/card/'+record.public_key
       }
 
       const allowGetLocation = ref( false )
