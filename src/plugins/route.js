@@ -15,6 +15,12 @@ import DashboardWidget from './../components/main/dashboard.vue'
  * Card Officer
  */
 import DetailCardComponent from './../layouts/staff/card.vue'
+
+/**
+ * Officer Components
+ */
+import OfficerCrud from './../components/officer/index.vue'
+import OfficerThumbnailCrud from './../components/officer/listing/thumbnail.vue'
 /**
  * Check in and out
  */
@@ -194,6 +200,58 @@ export const getRoutes = () => {
                         path: '' ,
                         component: CardInfoComponent
                     }
+                ]
+            },
+            {
+                name: 'Officer' ,
+                path: '/officer',
+                component: OfficerCrud ,
+                meta: { 
+                    transition: 'slide-right' ,
+                    requiresAuth: true,
+                    is_admin : true
+                },
+                children: [
+                    {
+                        name: "OfficerTable" ,
+                        path: '' ,
+                        component: OfficerThumbnailCrud // UserTableCrud
+                    },
+                    {
+                        name: "OfficerThumbnail" ,
+                        path: 'thumbnail' ,
+                        component: OfficerThumbnailCrud
+                    },
+                    {
+                        name: "OfficerThumbnailFilter" ,
+                        path: 'thumbnail/:ids' ,
+                        component: OfficerThumbnailCrud
+                    },
+                    // {
+                    //     name: "PeopleExportCrud" ,
+                    //     path: 'export' ,
+                    //     component: PeopleExportCrud
+                    // },
+                    // {
+                    //     name: "PeopleList" ,
+                    //     path: '' ,
+                    //     component: PeopleListCrud
+                    // },
+                    // {
+                    //     name: "PeopleDetail" ,
+                    //     path: ':id/detail' ,
+                    //     component: PeopleDetail
+                    // },
+                    // {
+                    //     name: "PeopleCreate" ,
+                    //     path: 'create' ,
+                    //     component: PeopleCreateCrud
+                    // },
+                    // {
+                    //     name: "PeopleUpdate" ,
+                    //     path: 'update' ,
+                    //     component: PeopleUpdateCrud
+                    // }
                 ]
             },
             {

@@ -45,15 +45,15 @@
                 </template>
                 កាលបរិច្ឆែទចាប់ផ្ដើមការងារ
               </n-tooltip>
-              <n-tooltip v-if="record.start" trigger="hover">
+              <n-tooltip v-if="record.start && record.end" trigger="hover">
                 <template #trigger>
-                  <div v-if="record.end" class="task-end text-xs w-1/2 text-right mb-4" >{{ record.end }}</div>
+                  <div class="task-end text-xs w-1/2 text-right mb-4" >{{ record.end }}</div>
                 </template>
                 កាលបរិច្ឆែទបញ្ចប់ការងារ 
               </n-tooltip>
-              <n-tooltip v-if="record.creator" trigger="hover">
+              <n-tooltip v-if="record.creator && record.minutes" trigger="hover">
                 <template #trigger>
-                  <div v-if="record.minutes" class="task-end w-24 text-xs font-bold text-left mb-4" >{{ record.minutes }} នាទី</div>
+                  <div class="task-end w-24 text-xs font-bold text-left mb-4" >{{ record.minutes }} នាទី</div>
                 </template>
                 រយះពេលបំពេញការងារ
               </n-tooltip>

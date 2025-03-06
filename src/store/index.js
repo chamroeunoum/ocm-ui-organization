@@ -12,6 +12,18 @@ import folder from './modules/folder'
 import officer from './modules/officer'
 import regulatorType from './modules/regulator/type'
 
+import people from './modules/people/people'
+import certificate from './modules/people/certificate'
+import niccertificate from './modules/people/niccertificate'
+import birthcertificate from './modules/people/birthcertificate'
+import weddingcertificate from './modules/people/weddingcertificate'
+
+// Location
+import province from './modules/location/province'
+import district from './modules/location/district'
+import commune from './modules/location/commune'
+import village from './modules/location/village'
+
 const debug = process.env.NODE_ENV !== 'production'
 
 export default createStore({
@@ -40,7 +52,18 @@ export default createStore({
     regulator ,
     search_regulator ,
     regulatorType ,
-    task
+    task ,
+    // People
+    people,
+    certificate ,
+    niccertificate ,
+    birthcertificate ,
+    weddingcertificate ,
+    // Province , District , Commune , Village
+    province ,
+    district ,
+    commune ,
+    village ,
   },
   strict: debug,
   plugins: debug ? 

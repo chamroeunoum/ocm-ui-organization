@@ -15,7 +15,7 @@
           <div class="font-moul text-left w-full text-gray-800" >
               <div class="font-btb font-bold pb-1 leading-6 text-center text-gray-700"  >{{ 
                 officer.card != undefined && officer.card != null && officer.card.id > 0 
-                  ? officer.card.number 
+                  ? officer.id // officer.card.number
                   : (
                     officer.organization != undefined && officer.organization != null && officer.organization.id > 0 ? $toKhmer( officer.organization.prefix + '-' + ( officer.id + '' ).padStart( 4 , '0' ) ) : 'OCM-ORG-' + officer.id
                   )
